@@ -1,11 +1,12 @@
 import { StyleSheet, Text, SafeAreaView, Dimensions, View, Touchable, TouchableOpacity } from 'react-native'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { colors } from '../../assets/colors'
 import MenuHome_icon from '../../assets/icons/MenuHome_icon';
 import MenuClose_icon from '../../assets/icons/MenuClose_icon';
 import { useNavigation } from '@react-navigation/native';
+import { DrawerContentComponentProps } from '@react-navigation/drawer';
 
-const { height } = Dimensions.get('screen');
+const { height, width } = Dimensions.get('screen');
 
 const MENU_DATA: Array<{ icon: React.ReactNode, title: string }> =
   [{
@@ -32,17 +33,20 @@ const MENU_DATA: Array<{ icon: React.ReactNode, title: string }> =
     icon: <MenuHome_icon />,
     title: 'Туристический потенциал территории',
   },
-]
+  ]
 
 
 
-const DrawerMenu = () => {
+const DrawerMenu = ({ props }: { props: DrawerContentComponentProps }) => {
 
   const navigation = useNavigation();
 
+  const close = () => { props.navigation.closeDrawer() }
+
+
   const drawerComponent = useCallback((item: { icon: React.ReactNode, title: string }) => {
     return (
-      <TouchableOpacity key={item.title} style={styles.menu_component_wrapper}>
+      <TouchableOpacity key={item.title} style={styles.menu_component_wrapper} onPress={close}>
         {item.icon}
         <Text style={styles.menu_component_text}>
           {item.title}
@@ -53,7 +57,7 @@ const DrawerMenu = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.menu_iconClose}>
+      <TouchableOpacity style={styles.menu_iconClose} onPress={close}>
         <MenuClose_icon />
       </TouchableOpacity>
       <View style={styles.menu_wrapper}>
@@ -67,11 +71,14 @@ export default DrawerMenu
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.blue,
     height,
+    width: width + 10,
+    backgroundColor: colors.blue,    
     paddingTop: 20,
     paddingLeft: 30,
-    paddingRight: 60
+    paddingRight: 60,
+    marginLeft: -20
+    
   },
   menu_wrapper: {
     marginTop: 80
