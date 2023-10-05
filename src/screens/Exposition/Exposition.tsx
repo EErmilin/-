@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Home = () => {
+const Exposition = () => {
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -13,7 +13,7 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Exposition
 
 const styles = StyleSheet.create({
     container: {

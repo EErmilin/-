@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -16,10 +9,10 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import DrawerNavigation from './src/navigation/DrawerNavigation';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import TopDrawerMenu from './src/navigation/components/TopDrawerMenu';
+import MainAppNavigation from './src/navigation/MainAppNavigation';
 
 
 const App = () => {
@@ -36,8 +29,10 @@ const App = () => {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <DrawerNavigation />
+        <MainAppNavigation />
       </SafeAreaView>
+
+
     </GestureHandlerRootView>
 
   );
