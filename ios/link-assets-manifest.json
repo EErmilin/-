@@ -2,8 +2,48 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/colors.ts",
+      "sha1": "47669ce8388af88149ad6264c5c46c38e4f4a242"
+    },
+    {
       "path": "assets/fonts/OzHandicraftCyrillicBT.ttf",
       "sha1": "a92142b9d0ba3478c118336d8d0e917e5f6ff438"
+    },
+    {
+      "path": "assets/icons/Drawer_icon.tsx",
+      "sha1": "41bc8783e8e3ee9f675d48c05abf09a307431a64"
+    },
+    {
+      "path": "assets/icons/MenuAbout_icon.tsx",
+      "sha1": "e6a48b4e18902e0830221cdb52130a658f4b4076"
+    },
+    {
+      "path": "assets/icons/MenuClose_icon.tsx",
+      "sha1": "a4b528aca576f3053f782552d971b18a311338aa"
+    },
+    {
+      "path": "assets/icons/MenuExposition_icon.tsx",
+      "sha1": "ff6ab3b1fddf15451daffbbf1bd41725ee0df466"
+    },
+    {
+      "path": "assets/icons/MenuFund_icon.tsx",
+      "sha1": "61e411ef70a02dcf4c46bbceee72bb8988dce5fa"
+    },
+    {
+      "path": "assets/icons/MenuMain_icon.tsx",
+      "sha1": "ec9b7c15ae53787a1c02195fb1f0202e735c69b3"
+    },
+    {
+      "path": "assets/icons/MenuPark_icon.tsx",
+      "sha1": "f30483c339db2f5d3e8667e67a6351d6f32e3434"
+    },
+    {
+      "path": "assets/icons/MenuTourismFeature_icon.tsx",
+      "sha1": "5f29b91781c042e4975868f672886beb8ba62bee"
+    },
+    {
+      "path": "assets/images/main_background_houses.png",
+      "sha1": "7d0f710ec5eb12c87cf16ab1a00ebbee4646073d"
     }
   ]
 }

@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const MenuHome_icon: FC = (_, props) => {
+const MenuMain_icon: FC = (_, props) => {
     return (
 
         <Svg
@@ -33,4 +33,4 @@ const MenuHome_icon: FC = (_, props) => {
     );
 };
 
-export default MenuHome_icon;
+export default MenuMain_icon;

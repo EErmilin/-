@@ -4,71 +4,69 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from '../screens/Home/Home';
-import MenuHome_icon from '../../assets/icons/MenuHome_icon';
+import TopDrawerMenu from './components/TopDrawerMenu';
+import { TabParamList, TMainAppPage } from './types/TabTypes';
 
 import CustomHeader from './components/CustomHeader';
 
-
+import Main from '../screens/Main/Main';
 import About from '../screens/About/About';
 import Fund from '../screens/Fund/Fund';
-import { TabParamList, TMainAppPage } from './types/TabTypes';
-import TopDrawerMenu from './components/TopDrawerMenu';
+import Exposition from '../screens/Exposition/Exposition';
+import Park from '../screens/Park/Park';
+import TourismFeature from '../screens/TourismFeature/TourismFeature';
+
+import MenuMain_icon from '../../assets/icons/MenuMain_icon';
 import MenuAbout_icon from '../../assets/icons/MenuAbout_icon';
 import MenuFund_icon from '../../assets/icons/MenuFund_icon';
 import MenuExposition_icon from '../../assets/icons/MenuExposition_icon';
 import MenuPark_icon from '../../assets/icons/MenuPark_icon';
 import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon';
-import Exposition from '../screens/Exposition/Exposition';
-import Park from '../screens/Park/Park';
-import TourismFeature from '../screens/TourismFeature/TourismFeature';
+
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export const PAGES: Array<TMainAppPage> =
   [{
-    name: "Home",
+    name: "Main",
     title: 'Главная',
-    icon: <MenuHome_icon />,
-    screen: Home
+    icon: <MenuMain_icon />,
+    screen: Main
   },
   {
     name: "About",
-    icon: <MenuAbout_icon />,
     title: 'О музее',
+    icon: <MenuAbout_icon />,
     screen: About
   },
   {
     name: "Fund",
-    icon: <MenuFund_icon />,
     title: 'Фонды',
+    icon: <MenuFund_icon />,
     screen: Fund
   },
   {
     name: "Exposition",
-    icon: <MenuExposition_icon />,
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
+    icon: <MenuExposition_icon />,
     screen: Exposition
   },
   {
     name: "Park",
-    icon: <MenuPark_icon />,
     title: 'Музейный этнографический парк «Земля предков»',
+    icon: <MenuPark_icon />,
     screen: Park
   },
   {
     name: "TourismFeature",
-    icon: <MenuTourismFeature_icon />,
     title: 'Туристический потенциал территории',
+    icon: <MenuTourismFeature_icon />,
     screen: TourismFeature
-  },
+  }
   ]
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
-
-  tabBarStyle: {
-    height: 0,
-  },
+  tabBarStyle: { height: 0 },
   headerShown: true,
   headerTransparent: true,
   headerStyle: {

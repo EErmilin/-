@@ -61,12 +61,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  darkHeader: {
-    backgroundColor: colors.blue_light,
-  },
-  lightHeader: {
-    backgroundColor: colors.white,
-  },
   backButton: {
     position: 'absolute',
     left: 16,

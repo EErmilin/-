@@ -7,7 +7,7 @@ export type TMainAppPage = {
 };
 
 export type TabParamList = {  
-  Home: undefined;
+  Main: undefined;
   About: undefined;
   Fund: undefined;  
   Exposition: undefined;
