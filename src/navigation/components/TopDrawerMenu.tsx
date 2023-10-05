@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StatusBar, StyleSheet } from 'react-native';
 
 import { useStore } from 'effector-react';
 import { $isDrawerOpen, close as closeDrawer } from '../../store/drawerModel';
@@ -33,17 +33,22 @@ const TopDrawerMenu = () => {
     }
 
     return (
-        <Modal
-            isVisible={isDrawerOpen}
-            animationIn="slideInDown"
-            animationOut="slideOutUp"
-            backdropOpacity={0}
-            style={styles.modal}
-            backdropColor={colors.blue}
-        >
-            <DrawerMenu onClose={onCloseDrawer} onNavigation={onNavigation} />
-        </Modal>
-
+        <>
+            <StatusBar
+                barStyle={isDrawerOpen ? 'light-content' : "dark-content"}
+                backgroundColor={isDrawerOpen ? colors.blue : "#fff"}
+            />
+            <Modal
+                isVisible={isDrawerOpen}
+                animationIn="slideInDown"
+                animationOut="slideOutUp"
+                backdropOpacity={0}
+                style={styles.modal}
+                backdropColor={colors.blue}                
+            >
+                <DrawerMenu onClose={onCloseDrawer} onNavigation={onNavigation} />
+            </Modal>
+        </>
     );
 };
 

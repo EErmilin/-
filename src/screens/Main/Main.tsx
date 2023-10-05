@@ -19,7 +19,7 @@ const Main = () => {
                 bounces={false}
                 showsVerticalScrollIndicator={false}
             >
-                <View >
+                <View style={{ height: 333 }}>
                     <Image
                         source={images.main_background_houses}
                         style={{ width: '100%', height: 360, position: 'absolute' }}

@@ -71,11 +71,15 @@ const styles = StyleSheet.create({
   },
   drawer: {
     position: 'absolute',
-    left: 16,
+    left: 11,
     top: Platform.OS === 'ios' ? 10 : 10,
     zIndex: 100,
     justifyContent: 'center',
+    alignItems: 'center',
     height: 30,
+    width: 30,
+    borderRadius: 15,
+    backgroundColor: '#ffffff90'
   },
   title: {
     fontSize: 14,
