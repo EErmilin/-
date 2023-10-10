@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
+// import {NavigationContainer} from '@react-navigation/native';
 
-import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationOptions,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 
 import TopDrawerMenu from './components/TopDrawerMenu';
-import { TabParamList, TMainAppPage } from './types/TabTypes';
+import {TabParamList, TMainAppPage} from './types/TabTypes';
 
 import CustomHeader from './components/CustomHeader';
 
@@ -23,50 +26,49 @@ import MenuExposition_icon from '../../assets/icons/MenuExposition_icon';
 import MenuPark_icon from '../../assets/icons/MenuPark_icon';
 import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon';
 
-
 const Tab = createBottomTabNavigator<TabParamList>();
 
-export const PAGES: Array<TMainAppPage> =
-  [{
-    name: "Main",
+export const PAGES: Array<TMainAppPage> = [
+  {
+    name: 'Main',
     title: 'Главная',
     icon: <MenuMain_icon />,
-    screen: Main
+    screen: Main,
   },
   {
-    name: "About",
+    name: 'About',
     title: 'О музее',
     icon: <MenuAbout_icon />,
-    screen: About
+    screen: About,
   },
   {
-    name: "Fund",
+    name: 'Fund',
     title: 'Фонды',
     icon: <MenuFund_icon />,
-    screen: Fund
+    screen: Fund,
   },
   {
-    name: "Exposition",
+    name: 'Exposition',
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
     icon: <MenuExposition_icon />,
-    screen: Exposition
+    screen: Exposition,
   },
   {
-    name: "Park",
+    name: 'Park',
     title: 'Музейный этнографический парк «Земля предков»',
     icon: <MenuPark_icon />,
-    screen: Park
+    screen: Park,
   },
   {
-    name: "TourismFeature",
+    name: 'TourismFeature',
     title: 'Туристический потенциал территории',
     icon: <MenuTourismFeature_icon />,
-    screen: TourismFeature
-  }
-  ]
+    screen: TourismFeature,
+  },
+];
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
-  tabBarStyle: { height: 0 },
+  tabBarStyle: {height: 0},
   headerShown: true,
   headerTransparent: true,
   headerStyle: {
@@ -75,34 +77,29 @@ const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
   },
 };
 
-
 const MainAppNavigation = () => {
   return (
-    <NavigationContainer>
+    <>
       <Tab.Navigator
         initialRouteName={PAGES[0].name}
         screenOptions={NAVIGATION_OPTIONS}
         backBehavior={'none'}>
-
-        {PAGES.map(page =>
+        {PAGES.map(page => (
           <Tab.Screen
             key={page.name}
             name={page.name}
             component={page.screen}
             options={{
-              header: ({ navigation }) => (
+              header: ({navigation}) => (
                 <CustomHeader navigation={navigation} />
               ),
               tabBarButton: () => null,
             }}
-
           />
-        )}
-
+        ))}
       </Tab.Navigator>
-
       <TopDrawerMenu />
-    </NavigationContainer>
+    </>
   );
 };
 
