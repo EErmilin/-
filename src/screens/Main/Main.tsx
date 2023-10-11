@@ -6,7 +6,14 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React from 'react';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
+//
+import React, {useEffect} from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
 import {colors} from '../../../assets/colors';
 import {images} from '../../../assets/images/images';
@@ -17,11 +24,31 @@ import River_icon from '../../../assets/icons/River_icon';
 import Home_About_icon from '../../../assets/icons/Home_About_icon';
 import Home_Exposition_icon from '../../../assets/icons/Home_Exposition_icon';
 import Home_Park_icon from '../../../assets/icons/Home_Park_icon';
+import {SharedElement} from 'react-navigation-shared-element';
+import {useRoute} from '@react-navigation/native';
 
 const Main = () => {
-  // const handleLayout = (event: {nativeEvent: {layout: {x: any; y: any}}}) => {
-  //   const {x, y} = event.nativeEvent.layout;
-  // };
+  const routes = useRoute();
+  const animatedText = useSharedValue(15);
+  const animatedTextOpacity = useSharedValue(0);
+
+  const textAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: animatedText.value}],
+      opacity: animatedTextOpacity.value,
+    };
+  });
+
+  useEffect(() => {
+    //animation if SplashScreen
+    if (routes.params?.screen === 'Splash') {
+      animatedText.value = withDelay(400, withTiming(0, {duration: 200}));
+      animatedTextOpacity.value = withDelay(
+        400,
+        withTiming(1, {duration: 200}),
+      );
+    }
+  }, [animatedText, routes.params?.screen, animatedTextOpacity]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -36,11 +63,14 @@ const Main = () => {
           />
           <View>
             <View style={styles.logo_container}>
-              <Logo_icon />
-              <Text style={styles.logo_title}>
+              <SharedElement id="logo.image">
+                <Logo_icon />
+              </SharedElement>
+
+              <Animated.Text style={[styles.logo_title, textAnimatedStyle]}>
                 Русскинской музей Природы и Человека имени Ядрошникова
                 Александра Павловича
-              </Text>
+              </Animated.Text>
             </View>
           </View>
 
@@ -55,14 +85,19 @@ const Main = () => {
             </View>
           </View>
         </View>
+        <Animated.View style={{transform: [{translateY: animatedText}]}}>
+          <River_icon />
+        </Animated.View>
 
-        <River_icon />
-
-        <View style={styles.bigButtons_wrapper}>
+        <Animated.View
+          style={[
+            styles.bigButtons_wrapper,
+            {transform: [{translateY: animatedText}]},
+          ]}>
           <Home_About_icon onPress={() => {}} />
           <Home_Exposition_icon onPress={() => {}} />
           <Home_Park_icon onPress={() => {}} />
-        </View>
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -87,6 +122,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: colors.blue,
     fontSize: 16,
+    // transform: [{translateY: -15}],
   },
   header_buttons_container: {
     marginTop: 117,
@@ -104,5 +140,6 @@ const styles = StyleSheet.create({
     gap: 20,
     alignSelf: 'center',
     marginBottom: 100,
+    transform: [{translateY: -15}],
   },
 });

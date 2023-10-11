@@ -2,25 +2,12 @@ import React, {useEffect} from 'react';
 import MainAppNavigation from './MainAppNavigation';
 import {StackParamList} from './types/TabTypes';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
-import {useNavigation} from '@react-navigation/native';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
+import Main from '../screens/Main/Main';
 
 const Stack = createSharedElementStackNavigator<StackParamList>();
 
 const SplashScreenNavigation = () => {
-  const navigation = useNavigation();
-  useEffect(() => {
-    const navigationTimer = setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'TabScreens'}],
-      });
-    }, 11000);
-    return () => {
-      clearTimeout(navigationTimer);
-    };
-  }, [navigation]);
-
   return (
     <Stack.Navigator
       initialRouteName="SplashScreen"
@@ -28,7 +15,15 @@ const SplashScreenNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
-      <Stack.Screen name="TabScreens" component={MainAppNavigation} />
+      <Stack.Screen
+        name="Home"
+        component={Main}
+        sharedElements={(route, otherRoute, showing) => {
+          const {id} = route.params;
+
+          return [{id: `${id}.image`, animation: 'fade-in'}];
+        }}
+      />
     </Stack.Navigator>
   );
 };

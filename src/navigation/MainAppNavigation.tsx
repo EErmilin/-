@@ -25,6 +25,7 @@ import MenuFund_icon from '../../assets/icons/MenuFund_icon';
 import MenuExposition_icon from '../../assets/icons/MenuExposition_icon';
 import MenuPark_icon from '../../assets/icons/MenuPark_icon';
 import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon';
+import SplashScreenNavigation from './SplashScreenNavigation';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -33,7 +34,7 @@ export const PAGES: Array<TMainAppPage> = [
     name: 'Main',
     title: 'Главная',
     icon: <MenuMain_icon />,
-    screen: Main,
+    screen: SplashScreenNavigation,
   },
   {
     name: 'About',
