@@ -6,7 +6,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
 import {colors} from '../../../assets/colors';
 import {images} from '../../../assets/images/images';
@@ -19,11 +19,9 @@ import Home_Exposition_icon from '../../../assets/icons/Home_Exposition_icon';
 import Home_Park_icon from '../../../assets/icons/Home_Park_icon';
 
 const Main = () => {
-  const handleLayout = (event: {nativeEvent: {layout: {x: any; y: any}}}) => {
-    const {x, y} = event.nativeEvent.layout;
-  };
-
-  useEffect(() => {}, []);
+  // const handleLayout = (event: {nativeEvent: {layout: {x: any; y: any}}}) => {
+  //   const {x, y} = event.nativeEvent.layout;
+  // };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -36,12 +34,14 @@ const Main = () => {
             source={images.main_background_houses}
             style={{width: '100%', height: 360, position: 'absolute'}}
           />
-          <View style={styles.logo_container} onLayout={handleLayout}>
-            <Logo_icon />
-            <Text style={styles.logo_title}>
-              Русскинской музей Природы и Человека имени Ядрошникова Александра
-              Павловича
-            </Text>
+          <View>
+            <View style={styles.logo_container}>
+              <Logo_icon />
+              <Text style={styles.logo_title}>
+                Русскинской музей Природы и Человека имени Ядрошникова
+                Александра Павловича
+              </Text>
+            </View>
           </View>
 
           <View style={styles.header_buttons_container}>

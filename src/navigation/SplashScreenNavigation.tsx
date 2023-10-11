@@ -1,18 +1,24 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
 import MainAppNavigation from './MainAppNavigation';
 import {StackParamList} from './types/TabTypes';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import {useNavigation} from '@react-navigation/native';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createSharedElementStackNavigator<StackParamList>();
 
 const SplashScreenNavigation = () => {
   const navigation = useNavigation();
   useEffect(() => {
-    // setTimeout(() => {
-    //   navigation.reset({routes: [{name: 'TabScreens'}]});
-    // }, 1000);
+    const navigationTimer = setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'TabScreens'}],
+      });
+    }, 11000);
+    return () => {
+      clearTimeout(navigationTimer);
+    };
   }, [navigation]);
 
   return (

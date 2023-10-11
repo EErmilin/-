@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, View, Image} from 'react-native';
+import {Dimensions, StyleSheet, View, Image, StatusBar} from 'react-native';
+import {SharedElement, nodeFromRef} from 'react-native-shared-element';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '../../../assets/colors';
@@ -11,6 +12,7 @@ import Animated, {
   Easing,
   runOnJS,
   useSharedValue,
+  withDelay,
   withTiming,
 } from 'react-native-reanimated';
 import {images} from '../../../assets/images/images';
@@ -27,25 +29,36 @@ const SplashScreen = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const hidePattern = () => {
-    patternOpacity.value = withTiming(0, {duration: 6000});
+    patternOpacity.value = withTiming(0, {duration: 3000});
   };
   //animation bottom and bg
   useEffect(() => {
-    bottomTranslateX.value = withTiming(
-      -(BOTTOM_WIDTH - width),
-      {
-        duration: 12000,
-        easing: Easing.bezier(0.25, 0, 0.25, 1),
-      },
-      () => {
-        runOnJS(setAnimationDone)(true);
-      },
-    );
-    patternOpacity.value = withTiming(0.2, {duration: 6000}, () => {
-      runOnJS(hidePattern)();
-    });
-    titleScale.value = withTiming(1.2, {duration: 6000});
-  }, [bottomTranslateX, patternOpacity, hidePattern, titleScale]);
+    if (!animationDone) {
+      bottomTranslateX.value = withTiming(
+        -(BOTTOM_WIDTH - width),
+        {
+          duration: 12000,
+          easing: Easing.bezier(0.25, 0, 0.25, 1),
+        },
+        () => {
+          runOnJS(setAnimationDone)(true);
+        },
+      );
+      patternOpacity.value = withDelay(
+        500,
+        withTiming(0.2, {duration: 4000}, () => {
+          runOnJS(hidePattern)();
+        }),
+      );
+      titleScale.value = withTiming(1.2, {duration: 6000});
+    }
+  }, [
+    bottomTranslateX,
+    patternOpacity,
+    hidePattern,
+    titleScale,
+    animationDone,
+  ]);
   //check
   useEffect(() => {
     if (animationDone) {
@@ -69,6 +82,7 @@ const SplashScreen = () => {
           </View>
           <Logo />
         </View>
+
         {/* TITLE */}
         <Animated.View style={[{transform: [{scale: titleScale}]}]}>
           <Splash_title />

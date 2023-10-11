@@ -1,12 +1,9 @@
-import {FC, useRef} from 'react';
+import {FC} from 'react';
 import Svg, {Path} from 'react-native-svg';
 
 const Splash_title: FC = (_, props) => {
-  const ref = useRef(null);
-  console.log(ref);
   return (
     <Svg
-      ref={ref}
       width="95"
       height="70"
       viewBox="0 0 95 70"
