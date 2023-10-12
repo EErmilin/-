@@ -1,5 +1,6 @@
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {colors} from '../../../assets/colors';
 import About_block from '../../../assets/icons/About_block';
 import History_block from '../../../assets/icons/History_block';
@@ -24,16 +25,29 @@ const About = () => {
       opacity: blocksOpacity.value,
     };
   });
+  //if focused animation
+  useFocusEffect(
+    useCallback(() => {
+      blocksY.value = withTiming(blocksY.value - 200, {duration: 500});
+      blocksOpacity.value = withTiming(1, {duration: 500});
+      blockRotate.value = withTiming('360deg', {duration: 400});
+      return () => {
+        blocksY.value = 200;
+        blocksOpacity.value = 0;
+        blockRotate.value = '0deg';
+      };
+    }, [blockRotate, blocksOpacity, blocksY]),
+  );
 
-  useEffect(() => {
-    blocksY.value = withTiming(blocksY.value - 200, {duration: 500});
-    blocksOpacity.value = withTiming(1, {duration: 500});
-    blockRotate.value = withTiming('360deg', {duration: 400});
-    return () => {
-      blocksY.value = 200;
-      blocksOpacity.value = 0;
-    };
-  }, []);
+  // useEffect(() => {
+  //   blocksY.value = withTiming(blocksY.value - 200, {duration: 500});
+  //   blocksOpacity.value = withTiming(1, {duration: 500});
+  //   blockRotate.value = withTiming('360deg', {duration: 400});
+  //   return () => {
+  //     blocksY.value = 200;
+  //     blocksOpacity.value = 0;
+  //   };
+  // }, [blockRotate, blocksOpacity, blocksY]);
 
   return (
     <View style={styles.container}>
