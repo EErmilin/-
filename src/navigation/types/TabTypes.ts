@@ -7,7 +7,7 @@ export type TMainAppPage = {
 
 export type StackParamList = {
   SplashScreen: undefined;
-  TabScreens: TabParamList;
+  Home: undefined;
 };
 
 export type TabParamList = {

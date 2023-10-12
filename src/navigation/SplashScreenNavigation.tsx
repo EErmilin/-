@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import MainAppNavigation from './MainAppNavigation';
+import React from 'react';
 import {StackParamList} from './types/TabTypes';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
@@ -20,7 +19,6 @@ const SplashScreenNavigation = () => {
         component={Main}
         sharedElements={(route, otherRoute, showing) => {
           const {id} = route.params;
-
           return [{id: `${id}.image`, animation: 'fade-in'}];
         }}
       />

@@ -12,7 +12,7 @@ import {TabParamList, TMainAppPage} from './types/TabTypes';
 
 import CustomHeader from './components/CustomHeader';
 
-import Main from '../screens/Main/Main';
+// import Main from '../screens/Main/Main';
 import About from '../screens/About/About';
 import Fund from '../screens/Fund/Fund';
 import Exposition from '../screens/Exposition/Exposition';
@@ -91,9 +91,11 @@ const MainAppNavigation = () => {
             name={page.name}
             component={page.screen}
             options={{
-              header: ({navigation}) => (
-                <CustomHeader navigation={navigation} />
-              ),
+              // eslint-disable-next-line react/no-unstable-nested-components
+              header: ({navigation}) =>
+                page.name !== 'Main' && (
+                  <CustomHeader navigation={navigation} />
+                ),
               tabBarButton: () => null,
             }}
           />

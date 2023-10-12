@@ -1,11 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, Image, SafeAreaView} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -13,7 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 //
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
 import {colors} from '../../../assets/colors';
 import {images} from '../../../assets/images/images';
@@ -25,12 +18,20 @@ import Home_About_icon from '../../../assets/icons/Home_About_icon';
 import Home_Exposition_icon from '../../../assets/icons/Home_Exposition_icon';
 import Home_Park_icon from '../../../assets/icons/Home_Park_icon';
 import {SharedElement} from 'react-navigation-shared-element';
-import {useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import CustomHeader from '../../navigation/components/CustomHeader';
 
 const Main = () => {
   const routes = useRoute();
   const animatedText = useSharedValue(15);
   const animatedTextOpacity = useSharedValue(0);
+  const animateBlocks = useSharedValue(-200);
+  const animateRotation = useSharedValue('0deg');
+  const navigation = useNavigation();
 
   const textAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -50,8 +51,25 @@ const Main = () => {
     }
   }, [animatedText, routes.params?.screen, animatedTextOpacity]);
 
+  //animation if from other screens
+  useFocusEffect(
+    useCallback(() => {
+      if (routes.params?.id === 'Main') {
+        animateBlocks.value = withTiming(animateBlocks.value + 200, {
+          duration: 400,
+        });
+        animateRotation.value = withTiming('360deg', {duration: 400});
+        return () => {
+          animateBlocks.value = -200;
+          animateRotation.value = '0deg';
+        };
+      }
+    }, [animateBlocks, animateRotation, routes]),
+  );
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
+      <CustomHeader navigation={navigation} />
       <ScrollView
         style={styles.container}
         bounces={false}
@@ -92,10 +110,19 @@ const Main = () => {
         <Animated.View
           style={[
             styles.bigButtons_wrapper,
-            {transform: [{translateY: animatedText}]},
+            {
+              transform: [
+                {
+                  translateY:
+                    routes.params.id === 'Main' ? animateBlocks : animatedText,
+                },
+              ],
+            },
           ]}>
           <Home_About_icon onPress={() => {}} />
-          <Home_Exposition_icon onPress={() => {}} />
+          <Animated.View style={{transform: [{rotateZ: animateRotation}]}}>
+            <Home_Exposition_icon onPress={() => {}} />
+          </Animated.View>
           <Home_Park_icon onPress={() => {}} />
         </Animated.View>
       </ScrollView>
@@ -107,7 +134,7 @@ export default Main;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
+    // paddingTop: 60,
     flex: 1,
   },
   logo_container: {

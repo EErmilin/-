@@ -1,39 +1,38 @@
-import { StyleSheet, Text, SafeAreaView, Dimensions, View, TouchableOpacity } from 'react-native'
-import React, { useCallback } from 'react'
-import { colors } from '../../../assets/colors'
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  Dimensions,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useCallback} from 'react';
+import {colors} from '../../../assets/colors';
 
 import MenuClose_icon from '../../../assets/icons/MenuClose_icon';
 
-import { PAGES } from '../MainAppNavigation';
-import { TMainAppPage } from '../types/TabTypes';
+import {PAGES} from '../MainAppNavigation';
+import {TMainAppPage} from '../types/TabTypes';
 
-const { width } = Dimensions.get('screen');
-
+const {width} = Dimensions.get('screen');
 
 interface IDrawerMenu {
   onNavigation: (screen: string) => void;
-  onClose: () => void
+  onClose: () => void;
 }
 
-
-
-const DrawerMenu: React.FC<IDrawerMenu> = ({ onNavigation, onClose }) => {
-
-
+const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
   const drawerComponent = useCallback((item: TMainAppPage) => {
     return (
       <TouchableOpacity
         key={item.title}
         style={styles.menu_component_wrapper}
-        onPress={() => onNavigation(item.name)}
-      >
+        onPress={() => onNavigation(item.name)}>
         {item.icon}
-        <Text style={styles.menu_component_text}>
-          {item.title}
-        </Text>
+        <Text style={styles.menu_component_text}>{item.title}</Text>
       </TouchableOpacity>
-    )
-  }, [])
+    );
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,10 +43,10 @@ const DrawerMenu: React.FC<IDrawerMenu> = ({ onNavigation, onClose }) => {
         {PAGES.map(element => drawerComponent(element))}
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default DrawerMenu
+export default DrawerMenu;
 
 const styles = StyleSheet.create({
   container: {
@@ -58,11 +57,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 30,
     paddingRight: 60,
-
-
   },
   menu_wrapper: {
-    marginTop: 80
+    marginTop: 80,
   },
   menu_iconClose: {
     position: 'absolute',
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
   },
   menu_component_wrapper: {
     paddingVertical: 10,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   menu_component_text: {
     marginTop: 4,
@@ -85,6 +82,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     lineHeight: 20,
-    textAlignVertical: 'center'
-  }
-})
+    textAlignVertical: 'center',
+  },
+});
