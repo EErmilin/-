@@ -6,12 +6,11 @@ import {colors} from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
 import Play_btn from '../../../assets/icons/Play_btn';
 import ExhibitTitle from '../../navigation/components/ExhibitTitle';
-import CustomHeader from '../../navigation/components/CustomHeader';
+// import CustomHeader from '../../navigation/components/CustomHeader';
 
 const ExHibit = () => {
   return (
     <SafeAreaView style={styles.container}>
-      {/* <CustomHeader /> */}
       <ScrollView contentContainerStyle={styles.scroll}>
         {/* SLIDER */}
         <View style={styles.slider}>

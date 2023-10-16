@@ -15,8 +15,8 @@ const App = () => {
     <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
         <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-          {/* <MainAppNavigation /> */}
-          <Exhibit />
+          <MainAppNavigation />
+          {/* <Exhibit /> */}
         </SafeAreaView>
       </NavigationContainer>
     </GestureHandlerRootView>

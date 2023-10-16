@@ -8,11 +8,12 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors} from '../../../assets/colors';
 import Drawer_icon from '../../../assets/icons/Drawer_icon';
 import {open as openDrawer} from '../../store/drawerModel';
+import Arrow_right from '../../../assets/icons/Arrow_right';
 
 type TStyle = 'dark' | 'light';
 
 type TProps = {
-  navigation: BottomTabNavigationProp<ParamListBase, string, undefined>;
+  navigation?: BottomTabNavigationProp<ParamListBase, string, undefined>;
 
   showBackButton?: boolean;
   title?: string;
@@ -37,8 +38,11 @@ const CustomHeader = ({
         <TouchableOpacity
           style={styles.backButton}
           activeOpacity={2}
-          // onPress={navigation.goBack}
-        ></TouchableOpacity>
+          onPress={navigation.goBack}>
+          <View style={styles.arrow}>
+            <Arrow_right />
+          </View>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -55,11 +59,11 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    left: 16,
+    right: 16,
     top: Platform.OS === 'ios' ? 10 : 10,
     zIndex: 1,
-    width: 30,
-    height: 30,
+
+    transform: [{rotateZ: '180deg'}],
   },
   drawer: {
     position: 'absolute',
@@ -74,13 +78,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff90',
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 14,
-    color: colors.white,
+    color: colors.blue,
     width: '100%',
     textAlign: 'center',
     letterSpacing: 2,
     paddingTop: 5,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
+  arrow: {
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

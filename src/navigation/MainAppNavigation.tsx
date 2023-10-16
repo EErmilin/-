@@ -26,8 +26,49 @@ import MenuExposition_icon from '../../assets/icons/MenuExposition_icon';
 import MenuPark_icon from '../../assets/icons/MenuPark_icon';
 import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon';
 import SplashScreenNavigation from './SplashScreenNavigation';
+import PhotoAppNavigation from './PhotoAppNavigation';
+import CustomTabBar from '../../assets/icons/CustomTabBar';
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+// export const PAGES: Array<TMainAppPage> = [
+//   {
+//     name: 'Main',
+//     title: 'Главная',
+//     icon: <MenuMain_icon />,
+//     screen: SplashScreenNavigation,
+//   },
+//   {
+//     name: 'About',
+//     title: 'О музее',
+//     icon: <MenuAbout_icon />,
+//     screen: About,
+//   },
+//   {
+//     name: 'Fund',
+//     title: 'Фонды',
+//     icon: <MenuFund_icon />,
+//     screen: Fund,
+//   },
+//   {
+//     name: 'Exposition',
+//     title: 'Экспозиция «Мир священной реки Тром-Аган»',
+//     icon: <MenuExposition_icon />,
+//     screen: Exposition,
+//   },
+//   {
+//     name: 'Park',
+//     title: 'Музейный этнографический парк «Земля предков»',
+//     icon: <MenuPark_icon />,
+//     screen: Park,
+//   },
+//   {
+//     name: 'TourismFeature',
+//     title: 'Туристический потенциал территории',
+//     icon: <MenuTourismFeature_icon />,
+//     screen: TourismFeature,
+//   },
+// ];
 
 export const PAGES: Array<TMainAppPage> = [
   {
@@ -37,34 +78,10 @@ export const PAGES: Array<TMainAppPage> = [
     screen: SplashScreenNavigation,
   },
   {
-    name: 'About',
+    name: 'Photo',
     title: 'О музее',
     icon: <MenuAbout_icon />,
-    screen: About,
-  },
-  {
-    name: 'Fund',
-    title: 'Фонды',
-    icon: <MenuFund_icon />,
-    screen: Fund,
-  },
-  {
-    name: 'Exposition',
-    title: 'Экспозиция «Мир священной реки Тром-Аган»',
-    icon: <MenuExposition_icon />,
-    screen: Exposition,
-  },
-  {
-    name: 'Park',
-    title: 'Музейный этнографический парк «Земля предков»',
-    icon: <MenuPark_icon />,
-    screen: Park,
-  },
-  {
-    name: 'TourismFeature',
-    title: 'Туристический потенциал территории',
-    icon: <MenuTourismFeature_icon />,
-    screen: TourismFeature,
+    screen: PhotoAppNavigation,
   },
 ];
 
@@ -84,7 +101,8 @@ const MainAppNavigation = () => {
       <Tab.Navigator
         initialRouteName={PAGES[0].name}
         screenOptions={NAVIGATION_OPTIONS}
-        backBehavior={'none'}>
+        backBehavior={'none'}
+        tabBar={props => <CustomTabBar {...props} />}>
         {PAGES.map(page => (
           <Tab.Screen
             key={page.name}
@@ -94,7 +112,7 @@ const MainAppNavigation = () => {
               // eslint-disable-next-line react/no-unstable-nested-components
               header: ({navigation}) =>
                 page.name !== 'Main' && (
-                  <CustomHeader navigation={navigation} />
+                  <CustomHeader navigation={navigation} title={page.title} />
                 ),
               tabBarButton: () => null,
             }}

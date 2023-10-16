@@ -69,7 +69,7 @@ const Main = () => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
-      <CustomHeader navigation={navigation} />
+      <CustomHeader showBackButton={false} />
       <ScrollView
         style={styles.container}
         bounces={false}
@@ -77,7 +77,12 @@ const Main = () => {
         <View style={{height: 333}}>
           <Image
             source={images.main_background_houses}
-            style={{width: '100%', height: 360, position: 'absolute'}}
+            style={{
+              width: '100%',
+              height: 360,
+              position: 'absolute',
+            }}
+            resizeMode="cover"
           />
           <View>
             <View style={styles.logo_container}>
@@ -91,21 +96,21 @@ const Main = () => {
               </Animated.Text>
             </View>
           </View>
-
-          <View style={styles.header_buttons_container}>
-            <View style={styles.header_button_wrapper}>
-              <Map_icon />
-              <Button text="Карта музея" onPress={() => {}} />
-            </View>
-            <View style={styles.header_button_wrapper}>
-              <QrCode_icon />
-              <Button text="Сканировать QR-код" onPress={() => {}} />
-            </View>
-          </View>
         </View>
         <Animated.View style={{transform: [{translateY: animatedText}]}}>
           <River_icon />
         </Animated.View>
+
+        <View style={styles.header_buttons_container}>
+          <View style={styles.header_button_wrapper}>
+            <Map_icon />
+            <Button text="Карта музея" onPress={() => {}} />
+          </View>
+          <View style={styles.header_button_wrapper}>
+            <QrCode_icon />
+            <Button text="Сканировать QR-код" onPress={() => {}} />
+          </View>
+        </View>
 
         <Animated.View
           style={[
@@ -148,14 +153,17 @@ const styles = StyleSheet.create({
     textAlignVertical: 'bottom',
     marginLeft: 10,
     color: colors.blue,
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: 'OzHandicraftCyrillicBT',
+    fontWeight: '600',
     // transform: [{translateY: -15}],
   },
   header_buttons_container: {
-    marginTop: 117,
     flexDirection: 'row',
     alignSelf: 'center',
-    gap: 20,
+    gap: 10,
+    marginBottom: 16,
+    marginTop: 10,
   },
   header_button_wrapper: {
     alignItems: 'center',
