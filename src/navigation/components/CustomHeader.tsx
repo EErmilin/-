@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {Platform, View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import React from 'react';
+import {Platform, View, StyleSheet, Text, Pressable} from 'react-native';
 
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {ParamListBase, useRoute} from '@react-navigation/native';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors} from '../../../assets/colors';
@@ -25,24 +25,39 @@ const CustomHeader = ({
   title,
 }: TProps) => {
   const insets = useSafeAreaInsets();
+  const route = useRoute();
+
+  //go back button
+  const navigationScreens = () => {
+    const parent = navigation?.canGoBack();
+    if (route.params) {
+      const goToScreen = route?.params?.history[0].key.split('-')[0];
+      navigation?.navigate(goToScreen);
+    } else if (parent === false) {
+      navigation?.navigate('Main');
+    }
+  };
 
   return (
     <View style={[styles.header, {paddingTop: insets.top}]}>
       <Text style={styles.title}>{title}</Text>
 
-      <TouchableOpacity style={styles.drawer} onPress={() => openDrawer()}>
+      <Pressable
+        hitSlop={10}
+        style={styles.drawer}
+        onPress={() => openDrawer()}>
         <Drawer_icon />
-      </TouchableOpacity>
+      </Pressable>
 
       {showBackButton && (
-        <TouchableOpacity
+        <Pressable
           style={styles.backButton}
-          activeOpacity={2}
-          onPress={navigation.goBack}>
+          hitSlop={10}
+          onPress={navigationScreens}>
           <View style={styles.arrow}>
             <Arrow_right />
           </View>
-        </TouchableOpacity>
+        </Pressable>
       )}
     </View>
   );

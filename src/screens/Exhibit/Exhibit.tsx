@@ -70,10 +70,11 @@ export default ExHibit;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 60,
+    backgroundColor: colors.white,
   },
   scroll: {
     paddingHorizontal: 30,
-    paddingVertical: 30,
     alignItems: 'center',
   },
   slider: {},

@@ -19,12 +19,15 @@ const TopDrawerMenu = () => {
 
   const isDrawerOpen = useStore($isDrawerOpen);
 
+  const navigationState = navigation.getState();
+
   const onNavigation = (screen: string) => {
-    if (screen === 'Main') {
-      navigation.navigate('Home', {id: screen});
-    } else {
-      navigation.navigate(screen as never);
-    }
+    navigation.navigate(screen, {history: navigationState.history});
+    // if (screen === 'Main') {
+    //   navigation.navigate('Home', {id: screen});
+    // } else {
+    //   navigation.navigate(screen as never);
+    // }
 
     closeDrawer();
   };

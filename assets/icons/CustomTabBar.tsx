@@ -1,18 +1,19 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {colors} from '../colors';
 import Home_tab_icon from './Home_tab_icon';
+import ScanQr_tab_icon from './ScanQr_tab_icon';
 
 const CustomTabBar = ({state, descriptors, navigation}) => {
+  //get page from state
   const pageKey = state?.history[0]?.key.split('-')[0];
 
-  const onPress = route => {
+  const onPress = (route: string) => {
     navigation.navigate(route, {id: route});
   };
 
   return (
     <View>
-      {state.routes.map((route, index) => {
+      {/* {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const isFocused = state.index === index;
 
@@ -27,7 +28,7 @@ const CustomTabBar = ({state, descriptors, navigation}) => {
             navigation.navigate(route.name);
           }
         };
-      })}
+      })} */}
       <View>
         {pageKey !== 'Main' ? (
           <View style={styles.tabBarContainer}>
@@ -39,9 +40,9 @@ const CustomTabBar = ({state, descriptors, navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.tabBtn}
-              onPress={() => onPress('Camera')}>
+              onPress={() => onPress('Photo')}>
               <Text style={styles.label}>QR-код</Text>
-              <Home_tab_icon />
+              <ScanQr_tab_icon />
             </TouchableOpacity>
           </View>
         ) : null}
@@ -77,19 +78,3 @@ const styles = StyleSheet.create({
   textActive: {},
   textInactive: {},
 });
-
-// else {
-//     return (
-//       <>
-//         <TouchableOpacity style={styles.tabBtn}>
-//           <Home_tab_icon />
-//           <Text style={styles.label}>Главная</Text>
-//         </TouchableOpacity>
-
-//         <TouchableOpacity style={styles.tabBtn}>
-//           <Text style={styles.label}>QR-код</Text>
-//           <Home_tab_icon />
-//         </TouchableOpacity>
-//       </>
-//     );
-//   }

@@ -5,6 +5,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
+import Video from 'react-native-video';
 //
 import React, {useCallback, useEffect} from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
@@ -59,13 +60,16 @@ const Main = () => {
           duration: 400,
         });
         animateRotation.value = withTiming('360deg', {duration: 400});
-        return () => {
-          animateBlocks.value = -200;
-          animateRotation.value = '0deg';
-        };
       }
     }, [animateBlocks, animateRotation, routes]),
   );
+  //return state
+  useEffect(() => {
+    return () => {
+      animateBlocks.value = -200;
+      animateRotation.value = '0deg';
+    };
+  }, [animateBlocks, animateRotation]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
@@ -108,7 +112,12 @@ const Main = () => {
           </View>
           <View style={styles.header_button_wrapper}>
             <QrCode_icon />
-            <Button text="Сканировать QR-код" onPress={() => {}} />
+            <Button
+              text="Сканировать QR-код"
+              onPress={() => {
+                navigation.navigate('Photo');
+              }}
+            />
           </View>
         </View>
 
@@ -124,12 +133,36 @@ const Main = () => {
               ],
             },
           ]}>
-          <Home_About_icon onPress={() => {}} />
+          <Home_About_icon
+            onPress={() => {
+              navigation.navigate('About');
+            }}
+          />
           <Animated.View style={{transform: [{rotateZ: animateRotation}]}}>
-            <Home_Exposition_icon onPress={() => {}} />
+            <Home_Exposition_icon
+              onPress={() => {
+                navigation.navigate('Exposition');
+              }}
+            />
           </Animated.View>
           <Home_Park_icon onPress={() => {}} />
         </Animated.View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Video
+            source={require('../../../assets/video/Rolik.mp4')}
+            style={styles.backgroundVideo}
+            paused
+            controls
+            repeat={false}
+            progressUpdateInterval={250.0}
+            resizeMode="contain"
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -146,11 +179,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
     alignSelf: 'center',
+    justifyContent: 'flex-start',
   },
   logo_title: {
     maxWidth: '70%',
     textAlign: 'center',
-    textAlignVertical: 'bottom',
+
     marginLeft: 10,
     color: colors.blue,
     fontSize: 20,
@@ -174,7 +208,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
     gap: 20,
     alignSelf: 'center',
-    marginBottom: 100,
+    marginBottom: 60,
     transform: [{translateY: -15}],
+  },
+  backgroundVideo: {
+    backgroundColor: '#000',
+    width: '95%',
+    height: 250,
+    marginBottom: 60,
   },
 });

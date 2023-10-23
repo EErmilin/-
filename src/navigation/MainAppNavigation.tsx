@@ -28,47 +28,9 @@ import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon'
 import SplashScreenNavigation from './SplashScreenNavigation';
 import PhotoAppNavigation from './PhotoAppNavigation';
 import CustomTabBar from '../../assets/icons/CustomTabBar';
+import ExHibit from '../screens/Exhibit/Exhibit';
 
 const Tab = createBottomTabNavigator<TabParamList>();
-
-// export const PAGES: Array<TMainAppPage> = [
-//   {
-//     name: 'Main',
-//     title: 'Главная',
-//     icon: <MenuMain_icon />,
-//     screen: SplashScreenNavigation,
-//   },
-//   {
-//     name: 'About',
-//     title: 'О музее',
-//     icon: <MenuAbout_icon />,
-//     screen: About,
-//   },
-//   {
-//     name: 'Fund',
-//     title: 'Фонды',
-//     icon: <MenuFund_icon />,
-//     screen: Fund,
-//   },
-//   {
-//     name: 'Exposition',
-//     title: 'Экспозиция «Мир священной реки Тром-Аган»',
-//     icon: <MenuExposition_icon />,
-//     screen: Exposition,
-//   },
-//   {
-//     name: 'Park',
-//     title: 'Музейный этнографический парк «Земля предков»',
-//     icon: <MenuPark_icon />,
-//     screen: Park,
-//   },
-//   {
-//     name: 'TourismFeature',
-//     title: 'Туристический потенциал территории',
-//     icon: <MenuTourismFeature_icon />,
-//     screen: TourismFeature,
-//   },
-// ];
 
 export const PAGES: Array<TMainAppPage> = [
   {
@@ -78,16 +40,52 @@ export const PAGES: Array<TMainAppPage> = [
     screen: SplashScreenNavigation,
   },
   {
-    name: 'Photo',
+    name: 'About',
     title: 'О музее',
     icon: <MenuAbout_icon />,
+    screen: About,
+  },
+  {
+    name: 'Fund',
+    title: 'Фонды',
+    icon: <MenuFund_icon />,
+    screen: Fund,
+  },
+  {
+    name: 'Exposition',
+    title: 'Экспозиция «Мир священной реки Тром-Аган»',
+    icon: <MenuExposition_icon />,
+    screen: Exposition,
+  },
+  {
+    name: 'Park',
+    title: 'Музейный этнографический парк «Земля предков»',
+    icon: <MenuPark_icon />,
+    screen: Park,
+  },
+  {
+    name: 'TourismFeature',
+    title: 'Туристический потенциал территории',
+    icon: <MenuTourismFeature_icon />,
+    screen: TourismFeature,
+  },
+  {
+    name: 'Details',
+    title: 'История экспоната',
+    icon: <MenuTourismFeature_icon />,
+    screen: ExHibit,
+  },
+  {
+    name: 'Photo',
+    title: '',
+    icon: null,
     screen: PhotoAppNavigation,
   },
 ];
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
   tabBarStyle: {height: 0},
-  headerShown: true,
+  // headerShown: true,
   headerTransparent: true,
   headerStyle: {
     backgroundColor: 'transparent',

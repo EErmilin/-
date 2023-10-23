@@ -1,5 +1,6 @@
 package com.rusmuseum;
 
+import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
@@ -16,6 +17,7 @@ public class MainActivity extends ReactActivity {
     return "RusMuseum";
   }
 
+  
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. Here we use a util class {@link
    * DefaultReactActivityDelegate} which allows you to easily enable Fabric and Concurrent React

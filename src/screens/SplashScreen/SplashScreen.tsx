@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, View, Image, Text} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {SharedElement} from 'react-navigation-shared-element';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,22 +23,24 @@ import Animated, {
 } from 'react-native-reanimated';
 import {images} from '../../../assets/images/images';
 import CircleLogo from '../../../assets/icons/CircleLogo';
+import {HomeScreenRouteProp} from '../../navigation/types/TabTypes';
 
 const BOTTOM_WIDTH = 975;
 const {width, height} = Dimensions.get('window');
+interface SplashScreenProps {
+  navigation: HomeScreenRouteProp;
+}
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({navigation}: SplashScreenProps) => {
   const [animationDone] = useState(false);
   const bottomTranslateX = useSharedValue(0);
   const patternOpacity = useSharedValue(0);
   const titleScale = useSharedValue(1);
 
-  //navigate to main
-
-  // const navigation = useNavigation();
+  //navigate to main with replace screen
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const navigateToMain = (id: string) => {
-    navigation.replace('Home', {id, screen: 'Splash'});
+  const navigateToMain = () => {
+    navigation.replace('Home', {id: 'logo', screen: 'Splash'});
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,17 +50,10 @@ const SplashScreen = ({navigation}) => {
   //animation bottom and bg
   useEffect(() => {
     if (!animationDone) {
-      bottomTranslateX.value = withTiming(
-        -(BOTTOM_WIDTH - width),
-        {
-          duration: 12000,
-          easing: Easing.bezier(0.25, 0, 0.25, 1),
-        },
-        () => {
-          // runOnJS(navigateToMain)('logo');
-          runOnJS(navigateToMain)('logo');
-        },
-      );
+      bottomTranslateX.value = withTiming(-(BOTTOM_WIDTH - width), {
+        duration: 12000,
+        easing: Easing.bezier(0.25, 0, 0.25, 1),
+      });
       patternOpacity.value = withDelay(
         500,
         withTiming(0.2, {duration: 4000}, () => {
@@ -105,7 +107,10 @@ const SplashScreen = ({navigation}) => {
         </Animated.View>
 
         <Animated.View style={styles.langContainer}>
-          <Text style={styles.lang}>RU</Text>
+          <TouchableOpacity onPress={navigateToMain}>
+            <Text style={styles.lang}>RU</Text>
+          </TouchableOpacity>
+
           <Text style={styles.lang}>EN</Text>
         </Animated.View>
         {/* WAVE */}
