@@ -1,6 +1,12 @@
-import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useCallback, useEffect} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {colors} from '../../../assets/colors';
 import About_block from '../../../assets/icons/About_block';
 import History_block from '../../../assets/icons/History_block';
@@ -17,6 +23,7 @@ const About = () => {
   const blocksY = useSharedValue(200);
   const blocksOpacity = useSharedValue(0);
   const blockRotate = useSharedValue('0deg');
+  const navigation = useNavigation();
 
   const animateBlocks = useAnimatedStyle(() => {
     return {
@@ -53,10 +60,17 @@ const About = () => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Animated.View style={[styles.blocks, animateBlocks]}>
-          <About_block />
-          <History_block />
+          <TouchableOpacity>
+            <About_block />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('History')}>
+            <History_block />
+          </TouchableOpacity>
+
           <Animated.View style={{transform: [{rotateZ: blockRotate}]}}>
-            <Information_block />
+            <TouchableOpacity>
+              <Information_block />
+            </TouchableOpacity>
           </Animated.View>
         </Animated.View>
       </ScrollView>

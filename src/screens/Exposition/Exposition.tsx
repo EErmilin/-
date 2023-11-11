@@ -1,32 +1,43 @@
-import {ScrollView, StyleSheet, Text, View, Image} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import {colors} from '../../../assets/colors';
 import {images} from '../../../assets/images/images';
+import {useNavigation} from '@react-navigation/native';
 
 const Exposition = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
-        <View style={styles.block}>
+        <TouchableOpacity
+          style={styles.block}
+          onPress={() => navigation.navigate('Details')}>
           <Image source={images.nature} />
           <Text style={styles.text}>Природа Югры</Text>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.block}>
           <Image source={images.khanty} />
-          <Text style={styles.text}>Природа Югры</Text>
+          <Text style={styles.text}>Тром-аганские ханты</Text>
         </View>
 
         <View style={styles.block}>
           <Image source={images.russianLive} />
-          <Text style={styles.text}>Природа Югры</Text>
+          <Text style={styles.text}>Быт русских старожилов</Text>
         </View>
 
         <View style={styles.block}>
           <Image source={images.fairyTales} />
-          <Text style={styles.text}>Природа Югры</Text>
+          <Text style={styles.text}>Сказки «Жили-были»</Text>
         </View>
       </ScrollView>
     </View>
@@ -54,6 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#000',
-    marginTop: 12,
+    marginVertical: 12,
   },
 });

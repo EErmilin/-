@@ -7,4 +7,27 @@ export const images = {
   khanty: require('./khanty.png'),
   nature: require('./nature.png'),
   russianLive: require('./russian_live.png'),
+  imageSlider: [
+    {
+      item: require('./1.jpg'),
+    },
+    {
+      item: require('./2.jpg'),
+    },
+    {
+      item: require('./3.jpg'),
+    },
+    {
+      item: require('./4.jpg'),
+    },
+    {
+      item: require('./5.jpg'),
+    },
+    {
+      item: require('./6.jpg'),
+    },
+    {
+      item: require('./7.jpg'),
+    },
+  ],
 };

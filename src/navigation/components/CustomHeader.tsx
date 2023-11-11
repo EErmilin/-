@@ -27,6 +27,8 @@ const CustomHeader = ({
   const insets = useSafeAreaInsets();
   const route = useRoute();
 
+  console.log(route);
+
   //go back button
   const navigationScreens = () => {
     const parent = navigation?.canGoBack();
@@ -66,7 +68,7 @@ const CustomHeader = ({
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    backgroundColor: colors.white,
     height: Platform.OS === 'ios' ? 44 : 50, // Высота заголовка
     width: '100%',
     justifyContent: 'center',

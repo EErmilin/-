@@ -78,6 +78,7 @@ const Main = () => {
         style={styles.container}
         bounces={false}
         showsVerticalScrollIndicator={false}>
+        {/* HEADER */}
         <View style={{height: 333}}>
           <Image
             source={images.main_background_houses}
@@ -104,7 +105,7 @@ const Main = () => {
         <Animated.View style={{transform: [{translateY: animatedText}]}}>
           <River_icon />
         </Animated.View>
-
+        {/* QR & MAP */}
         <View style={styles.header_buttons_container}>
           <View style={styles.header_button_wrapper}>
             <Map_icon />
@@ -120,7 +121,7 @@ const Main = () => {
             />
           </View>
         </View>
-
+        {/* BLOCKS navigation */}
         <Animated.View
           style={[
             styles.bigButtons_wrapper,
@@ -147,12 +148,8 @@ const Main = () => {
           </Animated.View>
           <Home_Park_icon onPress={() => {}} />
         </Animated.View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        {/* VIDEO */}
+        <View style={styles.videoContainer}>
           <Video
             source={require('../../../assets/video/Rolik.mp4')}
             style={styles.backgroundVideo}
@@ -210,6 +207,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 60,
     transform: [{translateY: -15}],
+  },
+  videoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backgroundVideo: {
     backgroundColor: '#000',

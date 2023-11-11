@@ -29,6 +29,7 @@ import SplashScreenNavigation from './SplashScreenNavigation';
 import PhotoAppNavigation from './PhotoAppNavigation';
 import CustomTabBar from '../../assets/icons/CustomTabBar';
 import ExHibit from '../screens/Exhibit/Exhibit';
+import ExhibitSlider from '../screens/Exhibit/ExhibitSlider';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -70,9 +71,15 @@ export const PAGES: Array<TMainAppPage> = [
     screen: TourismFeature,
   },
   {
+    name: 'History',
+    title: '',
+    icon: null,
+    screen: ExhibitSlider,
+  },
+  {
     name: 'Details',
-    title: 'История экспоната',
-    icon: <MenuTourismFeature_icon />,
+    title: '',
+    icon: null,
     screen: ExHibit,
   },
   {
