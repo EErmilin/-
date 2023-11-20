@@ -111,7 +111,8 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
             <Text style={styles.lang}>RU</Text>
           </TouchableOpacity>
 
-          <Text style={styles.lang}>EN</Text>
+    {     // <Text style={styles.lang}>EN</Text>
+    }
         </Animated.View>
         {/* WAVE */}
         <Animated.View

@@ -31,6 +31,10 @@ import CustomTabBar from '../../assets/icons/CustomTabBar';
 import ExHibit from '../screens/Exhibit/Exhibit';
 import ExhibitSlider from '../screens/Exhibit/ExhibitSlider';
 import Quiz from '../screens/Quiz/Quiz';
+import AboutPage from '../screens/About/AboutPage';
+import River from '../screens/About/River';
+import Alexsander from '../screens/About/Alexsander';
+import Info from '../screens/About/Info';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -47,32 +51,31 @@ export const PAGES: Array<TMainAppPage> = [
     icon: <MenuAbout_icon />,
     screen: About,
   },
-  {
-    name: 'Fund',
-    title: 'Фонды',
-    icon: <MenuFund_icon />,
-    screen: Fund,
-  },
-
+ // {
+ //   name: 'Fund',
+ //   title: 'Фонды',
+ //   icon: <MenuFund_icon />,
+ //   screen: Fund,
+ // },
   {
     name: 'Exposition',
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
     icon: <MenuExposition_icon />,
-    screen: Exposition,
+    screen: River// Exposition,
   },
-  {
-    name: 'Park',
-    title: 'Музейный этнографический парк «Земля предков»',
-    icon: <MenuPark_icon />,
-    screen: Park,
-  },
+ // {
+ //   name: 'Park',
+ //   title: 'Музейный этнографический парк «Земля предков»',
+ //   icon: <MenuPark_icon />,
+ //   screen: Park,
+ // },
 
-  {
-    name: 'TourismFeature',
-    title: 'Туристический потенциал территории',
-    icon: <MenuTourismFeature_icon />,
-    screen: TourismFeature,
-  },
+ // {
+ //   name: 'TourismFeature',
+ //   title: 'Туристический потенциал территории',
+ //   icon: <MenuTourismFeature_icon />,
+ //   screen: TourismFeature,
+ // },
   {
     name: 'Quiz',
     title: 'Викторина о музее',
@@ -97,6 +100,24 @@ export const PAGES: Array<TMainAppPage> = [
     icon: null,
     screen: PhotoAppNavigation,
   },
+  {
+    name: 'AboutPage',
+    title: 'История',
+    icon: null,
+    screen: AboutPage,
+  },
+  {
+    name: 'Alexsander',
+    title: 'Александр Павлович Ядрошников',
+    icon: null,
+    screen: Alexsander,
+  },
+  {
+    name: 'Info',
+    title: 'Для посетителей',
+    icon: null,
+    screen: Info,
+  }
 ];
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {

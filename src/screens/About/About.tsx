@@ -60,15 +60,15 @@ const About = () => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Animated.View style={[styles.blocks, animateBlocks]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Alexsander')}>
             <About_block />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('History')}>
+          <TouchableOpacity onPress={() => navigation.navigate('AboutPage')}>
             <History_block />
           </TouchableOpacity>
 
           <Animated.View style={{transform: [{rotateZ: blockRotate}]}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Info')}>
               <Information_block />
             </TouchableOpacity>
           </Animated.View>

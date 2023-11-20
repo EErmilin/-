@@ -161,15 +161,16 @@ const Main = () => {
               }}
             />
           </Animated.View>
-          <Home_Park_icon onPress={() => { }} />
+   {//       <Home_Park_icon onPress={() => { }} />
+   }
         </Animated.View>
         {/* VIDEO */}
         <View style={styles.videoContainer}>
           <Video
             source={require('../../../assets/video/Rolik.mp4')}
             style={styles.backgroundVideo}
-            paused
-            controls
+            paused ={false}
+           // controls
             repeat={false}
             progressUpdateInterval={250.0}
             resizeMode="contain"
