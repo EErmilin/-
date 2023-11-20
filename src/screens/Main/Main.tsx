@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View, Image, SafeAreaView} from 'react-native';
+import { ScrollView, StyleSheet, View, Image, SafeAreaView } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -7,10 +7,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import Video from 'react-native-video';
 //
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
-import {colors} from '../../../assets/colors';
-import {images} from '../../../assets/images/images';
+import { colors } from '../../../assets/colors';
+import { images } from '../../../assets/images/images';
 import QrCode_icon from '../../../assets/icons/QrCode_icon';
 import Button from '../../components/base/Button';
 import Map_icon from '../../../assets/icons/Map_icon';
@@ -18,15 +18,19 @@ import River_icon from '../../../assets/icons/River_icon';
 import Home_About_icon from '../../../assets/icons/Home_About_icon';
 import Home_Exposition_icon from '../../../assets/icons/Home_Exposition_icon';
 import Home_Park_icon from '../../../assets/icons/Home_Park_icon';
-import {SharedElement} from 'react-navigation-shared-element';
+import { SharedElement } from 'react-navigation-shared-element';
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
 import CustomHeader from '../../navigation/components/CustomHeader';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { fetchItems } from '../../api/directusService';
+import { useStore } from '../../../App';
 
 const Main = () => {
+  const { state, dispatch }: any = useStore();
   const routes = useRoute();
   const animatedText = useSharedValue(15);
   const animatedTextOpacity = useSharedValue(0);
@@ -36,7 +40,7 @@ const Main = () => {
 
   const textAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{translateY: animatedText.value}],
+      transform: [{ translateY: animatedText.value }],
       opacity: animatedTextOpacity.value,
     };
   });
@@ -44,10 +48,10 @@ const Main = () => {
   useEffect(() => {
     //animation if SplashScreen
     if (routes.params?.screen === 'Splash') {
-      animatedText.value = withDelay(400, withTiming(0, {duration: 200}));
+      animatedText.value = withDelay(400, withTiming(0, { duration: 200 }));
       animatedTextOpacity.value = withDelay(
         400,
-        withTiming(1, {duration: 200}),
+        withTiming(1, { duration: 200 }),
       );
     }
   }, [animatedText, routes.params?.screen, animatedTextOpacity]);
@@ -59,11 +63,11 @@ const Main = () => {
         animateBlocks.value = withTiming(animateBlocks.value + 200, {
           duration: 400,
         });
-        animateRotation.value = withTiming('360deg', {duration: 400});
+        animateRotation.value = withTiming('360deg', { duration: 400 });
       }
     }, [animateBlocks, animateRotation, routes]),
   );
-  //return state
+
   useEffect(() => {
     return () => {
       animateBlocks.value = -200;
@@ -71,15 +75,26 @@ const Main = () => {
     };
   }, [animateBlocks, animateRotation]);
 
+
+
+  const fetchData = async () => {
+    const data = await fetchItems('exhibits');
+    dispatch({ type: 'setExhibits', payload: data.data.data });
+  };
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <CustomHeader showBackButton={false} />
       <ScrollView
         style={styles.container}
         bounces={false}
         showsVerticalScrollIndicator={false}>
         {/* HEADER */}
-        <View style={{height: 333}}>
+        <View style={{ height: 333 }}>
           <Image
             source={images.main_background_houses}
             style={{
@@ -102,14 +117,14 @@ const Main = () => {
             </View>
           </View>
         </View>
-        <Animated.View style={{transform: [{translateY: animatedText}]}}>
+        <Animated.View style={{ transform: [{ translateY: animatedText }] }}>
           <River_icon />
         </Animated.View>
         {/* QR & MAP */}
         <View style={styles.header_buttons_container}>
           <View style={styles.header_button_wrapper}>
             <Map_icon />
-            <Button text="Карта музея" onPress={() => {}} />
+            <Button text="Карта музея" onPress={() => { }} />
           </View>
           <View style={styles.header_button_wrapper}>
             <QrCode_icon />
@@ -139,14 +154,14 @@ const Main = () => {
               navigation.navigate('About');
             }}
           />
-          <Animated.View style={{transform: [{rotateZ: animateRotation}]}}>
+          <Animated.View style={{ transform: [{ rotateZ: animateRotation }] }}>
             <Home_Exposition_icon
               onPress={() => {
                 navigation.navigate('Exposition');
               }}
             />
           </Animated.View>
-          <Home_Park_icon onPress={() => {}} />
+          <Home_Park_icon onPress={() => { }} />
         </Animated.View>
         {/* VIDEO */}
         <View style={styles.videoContainer}>
@@ -160,6 +175,24 @@ const Main = () => {
             resizeMode="contain"
           />
         </View>
+
+        <Animated.View
+
+          style={[
+            styles.bigButtons_wrapper,
+          ]}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              navigation.navigate('Quiz');
+            }}>
+            <Image
+              style={styles.img}
+              source={require('../../../assets/images/qwiz.png')}
+
+            />
+          </TouchableWithoutFeedback>
+        </Animated.View>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -171,6 +204,10 @@ const styles = StyleSheet.create({
   container: {
     // paddingTop: 60,
     flex: 1,
+  },
+  img: {
+    width: 320,
+    height: 120,
   },
   logo_container: {
     marginTop: 20,
@@ -206,16 +243,18 @@ const styles = StyleSheet.create({
     gap: 20,
     alignSelf: 'center',
     marginBottom: 60,
-    transform: [{translateY: -15}],
+    transform: [{ translateY: -15 }],
   },
   videoContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   backgroundVideo: {
     backgroundColor: '#000',
     width: '95%',
+ 
     height: 250,
     marginBottom: 60,
   },

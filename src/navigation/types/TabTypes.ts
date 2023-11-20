@@ -5,6 +5,7 @@ export type TMainAppPage = {
   title: string;
   icon: React.ReactNode;
   screen: React.ComponentType;
+  customTitle: string;
 };
 
 //splash & home Stack types
@@ -30,4 +31,7 @@ export type TabParamList = {
   TourismFeature: undefined;
   Details: undefined;
   Photo: undefined;
+  Quiz: undefined;
 };
+
+

@@ -2,7 +2,7 @@ import React from 'react';
 import {Platform, View, StyleSheet, Text, Pressable} from 'react-native';
 
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {ParamListBase, useRoute} from '@react-navigation/native';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors} from '../../../assets/colors';
@@ -14,36 +14,34 @@ type TStyle = 'dark' | 'light';
 
 type TProps = {
   navigation?: BottomTabNavigationProp<ParamListBase, string, undefined>;
-
+  customTitle?: string
   showBackButton?: boolean;
   title?: string;
 };
 const CustomHeader = ({
   navigation,
-
   showBackButton = true,
+  customTitle,
   title,
 }: TProps) => {
   const insets = useSafeAreaInsets();
   const route = useRoute();
-
-  console.log(route);
+  const navigationHook = useNavigation();
+  console.log(customTitle);
 
   //go back button
   const navigationScreens = () => {
     const parent = navigation?.canGoBack();
-    if (route.params) {
+    if (route.params && route?.params?.history) {
       const goToScreen = route?.params?.history[0].key.split('-')[0];
-      navigation?.navigate(goToScreen);
-    } else if (parent === false) {
-      navigation?.navigate('Main');
-    }
+     return navigation?.navigate(goToScreen);
+    } 
+    return navigationHook.navigate('Main');
   };
 
   return (
     <View style={[styles.header, {paddingTop: insets.top}]}>
-      <Text style={styles.title}>{title}</Text>
-
+      <Text style={styles.title}>{customTitle ?? title}</Text>
       <Pressable
         hitSlop={10}
         style={styles.drawer}

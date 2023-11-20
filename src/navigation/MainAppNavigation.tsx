@@ -30,6 +30,7 @@ import PhotoAppNavigation from './PhotoAppNavigation';
 import CustomTabBar from '../../assets/icons/CustomTabBar';
 import ExHibit from '../screens/Exhibit/Exhibit';
 import ExhibitSlider from '../screens/Exhibit/ExhibitSlider';
+import Quiz from '../screens/Quiz/Quiz';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -52,6 +53,7 @@ export const PAGES: Array<TMainAppPage> = [
     icon: <MenuFund_icon />,
     screen: Fund,
   },
+
   {
     name: 'Exposition',
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
@@ -64,11 +66,18 @@ export const PAGES: Array<TMainAppPage> = [
     icon: <MenuPark_icon />,
     screen: Park,
   },
+
   {
     name: 'TourismFeature',
     title: 'Туристический потенциал территории',
     icon: <MenuTourismFeature_icon />,
     screen: TourismFeature,
+  },
+  {
+    name: 'Quiz',
+    title: 'Викторина о музее',
+    icon: <MenuMain_icon />,
+    screen: Quiz,
   },
   {
     name: 'History',
@@ -116,7 +125,7 @@ const MainAppNavigation = () => {
             options={{
               // eslint-disable-next-line react/no-unstable-nested-components
               header: ({navigation}) =>
-                page.name !== 'Main' && (
+                page.name !== 'Main' && page.name!=='Details' && page.name !== 'Photo' && (
                   <CustomHeader navigation={navigation} title={page.title} />
                 ),
               tabBarButton: () => null,

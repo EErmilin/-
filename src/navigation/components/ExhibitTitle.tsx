@@ -17,8 +17,10 @@ export default ExhibitTitle;
 
 const styles = StyleSheet.create({
   text: {
+    marginBottom: 22,
     fontSize: 24,
     color: 'black',
     fontWeight: '600',
+    fontFamily: 'OzHandicraftCyrillicBT',
   },
 });
