@@ -21,6 +21,7 @@ interface IDrawerMenu {
   onClose: () => void;
 }
 
+
 const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
   const drawerComponent = useCallback((item: TMainAppPage) => {
     return (
