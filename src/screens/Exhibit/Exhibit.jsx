@@ -17,29 +17,29 @@ import { useEffect } from 'react';
 const ExHibit = ({ route }) => {
   const { state } = useStore();
   const current = state.exhibits.find((item) => item.id == route.params.uuid)
-  const imgArray = current.images.map(img => `https://museum.dev.simple-apps.ru/assets/${img.directus_files_id.filename_disk}`);
+  const imgArray = current.images.map(img => img.directus_files_id ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}` : null);
   const { width } = useWindowDimensions()
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
 
   const refImage = useRef(null);
   const nextSlider = () => {
-    if(active===imgArray.length-1)return
-      setActive(active + 1);
-      setLayoutX(layoutX + 320);
-      console.log(layoutX);
+    if (active === imgArray.length - 1) return
+    setActive(active + 1);
+    setLayoutX(layoutX + 320);
+    console.log(layoutX);
   };
 
   const prevSlider = () => {
-    if(active===0)return
-      setActive(active - 1);
-      setLayoutX(layoutX - 320);
-      console.log(layoutX);
+    if (active === 0) return
+    setActive(active - 1);
+    setLayoutX(layoutX - 320);
+    console.log(layoutX);
 
   };
-  useEffect(()=>{
-    refImage?.current?.scrollTo({x: layoutX, animated: true});
-  },[layoutX])
+  useEffect(() => {
+    refImage?.current?.scrollTo({ x: layoutX, animated: true });
+  }, [layoutX])
 
   const tagsStyles = {
     body: {
@@ -48,7 +48,6 @@ const ExHibit = ({ route }) => {
     },
   };
 
-
   if (!current) return
   return (
     <>
@@ -56,7 +55,7 @@ const ExHibit = ({ route }) => {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           {/* SLIDER */}
-          <View style={styles.slider}>
+          {imgArray && imgArray.length&& imgArray[0] ? <View style={styles.slider}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -65,7 +64,7 @@ const ExHibit = ({ route }) => {
               {imgArray.map((image, i) => {
                 return (
                   <Image
-                    source={{uri: image}}
+                    source={{ uri: image }}
                     style={styles.imageStyle}
                     resizeMode="contain"
                     key={i}
@@ -97,10 +96,11 @@ const ExHibit = ({ route }) => {
                 );
               })}
             </View>
-          </View>
+          </View>: null}
           {/* VOICE */}
           <View style={styles.voiceContainer}>
-          {  /**       <View style={styles.play}>
+          
+            {  /**       <View style={styles.play}>
               <Play_btn />
              <WaveForm
               waveFormStyle={{waveColor:'red', scrubColor:'blue'}}
@@ -114,7 +114,7 @@ const ExHibit = ({ route }) => {
           <View style={styles.infoContainer}>
             <ExhibitTitle>{current.name}</ExhibitTitle>
 
-            <HTML contentWidth={width} source={{ html: current.description }}  tagsStyles={tagsStyles}/>
+            <HTML contentWidth={width} source={{ html: current.description }} tagsStyles={tagsStyles} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -125,7 +125,7 @@ const ExHibit = ({ route }) => {
 export default ExHibit;
 
 const styles = StyleSheet.create({
-  
+
   left: {
     width: 30,
     height: 30,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{translateX: 300 / 2}],
+    transform: [{ translateX: 300 / 2 }],
     flexDirection: 'row',
     gap: 4,
   },

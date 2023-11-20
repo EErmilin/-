@@ -32,6 +32,9 @@ export type TabParamList = {
   Details: undefined;
   Photo: undefined;
   Quiz: undefined;
+  Info:undefined;
+  Alexsander:undefined;
+  AboutPage: undefined;
 };
 
 

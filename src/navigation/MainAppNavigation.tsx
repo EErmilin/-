@@ -114,7 +114,7 @@ export const PAGES: Array<TMainAppPage> = [
   },
   {
     name: 'Info',
-    title: 'Для посетителей',
+    title: 'Для посетитилей',
     icon: null,
     screen: Info,
   }

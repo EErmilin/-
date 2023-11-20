@@ -33,6 +33,8 @@ const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
       </TouchableOpacity>
     );
   }, []);
+  const menuLinks = PAGES.filter((e)=>e.icon )
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,7 +42,7 @@ const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
         <MenuClose_icon />
       </TouchableOpacity>
       <View style={styles.menu_wrapper}>
-        {PAGES.map(element => drawerComponent(element))}
+        {menuLinks.map(element => drawerComponent(element))}
       </View>
     </SafeAreaView>
   );
