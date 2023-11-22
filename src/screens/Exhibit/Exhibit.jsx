@@ -13,6 +13,7 @@ import HTML from 'react-native-render-html';
 import { useRef } from 'react';
 import Left_arrow from '../../../assets/icons/Left_arrow';
 import { useEffect } from 'react';
+import MusicPlayer from '../../components/Audio';
 
 const ExHibit = ({ route }) => {
   const { state } = useStore();
@@ -35,8 +36,8 @@ const ExHibit = ({ route }) => {
     setActive(active - 1);
     setLayoutX(layoutX - 320);
     console.log(layoutX);
-
   };
+
   useEffect(() => {
     refImage?.current?.scrollTo({ x: layoutX, animated: true });
   }, [layoutX])
@@ -55,7 +56,7 @@ const ExHibit = ({ route }) => {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           {/* SLIDER */}
-          {imgArray && imgArray.length&& imgArray[0] ? <View style={styles.slider}>
+          {imgArray && imgArray.length && imgArray[0] ? <View style={styles.slider}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -96,19 +97,11 @@ const ExHibit = ({ route }) => {
                 );
               })}
             </View>
-          </View>: null}
+          </View> : null}
           {/* VOICE */}
           <View style={styles.voiceContainer}>
-          
-            {  /**       <View style={styles.play}>
-              <Play_btn />
-             <WaveForm
-              waveFormStyle={{waveColor:'red', scrubColor:'blue'}}
-                  waveColor="#000" // Ensure that the waveColor prop is being passed correctly
-                  waveFormWidth={400}
-                  waveFormHeight={100}
-               source={{uri:'https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3'}}  />
-            </View>*/}
+
+            {current.audio && <MusicPlayer audio={`https://museum.mobility.tw1.ru/assets/${current.audio}.wav`} />}
           </View>
           {/* INFO */}
           <View style={styles.infoContainer}>

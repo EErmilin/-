@@ -28,6 +28,10 @@ import CustomHeader from '../../navigation/components/CustomHeader';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fetchItems } from '../../api/directusService';
 import { useStore } from '../../../App';
+import TrackPlayer from 'react-native-track-player';
+
+
+
 
 const Main = () => {
   const { state, dispatch }: any = useStore();
@@ -44,6 +48,7 @@ const Main = () => {
       opacity: animatedTextOpacity.value,
     };
   });
+
 
   useEffect(() => {
     //animation if SplashScreen
@@ -170,13 +175,12 @@ const Main = () => {
             source={require('../../../assets/video/Rolik.mp4')}
             style={styles.backgroundVideo}
             paused ={false}
-           // controls
+           //controls
             repeat={false}
             progressUpdateInterval={250.0}
             resizeMode="contain"
           />
         </View>
-
         <Animated.View
 
           style={[

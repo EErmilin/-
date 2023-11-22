@@ -15,6 +15,7 @@ import Play_btn from '../../../assets/icons/Play_btn';
 import WaveForm from 'react-native-audiowaveform';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import Left_arrow from '../../../assets/icons/Left_arrow';
+import AudioPlayer from '../../components/Audio';
 
 interface ExHibitProps {
   image: string;
@@ -22,7 +23,7 @@ interface ExHibitProps {
   description: string;
 }
 
-const River = () => {
+const River = ({props}) => {
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
@@ -108,10 +109,11 @@ const River = () => {
           </View>
           {/* VOICE */}
           <View style={styles.voiceContainer}>
-            <View style={styles.play}>
-              <Play_btn />
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <AudioPlayer audio={"https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav"}/>
             </View>
           </View>
+
           {/* INFO */}
           <View style={styles.infoContainer}>
             <Text style={styles.infoText}>

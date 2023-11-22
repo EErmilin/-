@@ -10,17 +10,15 @@ import {
 import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
-import Arrow_right from '../../../assets/icons/Arrow_right';
-import Play_btn from '../../../assets/icons/Play_btn';
-import WaveForm from 'react-native-audiowaveform';
 import CustomHeader from '../../navigation/components/CustomHeader';
-import Left_arrow from '../../../assets/icons/Left_arrow';
+import AudioPlayer from '../../components/Audio';
 
 interface ExHibitProps {
   image: string;
   images: string[];
   description: string;
 }
+
 
 const AboutPage = () => {
   const refImage = useRef(null);
@@ -114,6 +112,9 @@ const AboutPage = () => {
           </View>*/}
 
           {/* INFO */}
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <AudioPlayer audio={"https://museum.mobility.tw1.ru/assets/3541dd36-8d98-468e-8603-158ebcf130a2.mp3"} />
+            </View>
           <View style={styles.infoContainer}>
             <Text style={styles.infoText}>
               Тысячелетнее наследие прошлого, отраженное в уникальной культуре тром-аганских ханты и природных богатствах Югры бережно хранит наш музей. На создание музея в 1988 году подвигли энтузиаста Александра Павловича Ядрошникова желание показать красоту края, глубокое уважение к ханты и стремление народа к сохранению своих культурных традиций. В основу первой музейной экспозиции легло увлечение Александра Павловича таксидермией – изготовлением муляжей животных. С первых дней существования музей стал популярен среди гостей и коренных жителей. Для пополнения фондов мастер организовывал экспедиции на хантыйские стойбища, оказывал посильную помощь археологам, ученым и журналистам в изучении края.  В начале 1990-х годов на территории музейного парка  создал хантыйское стойбище - комплекс хантыйской традиционной архитектуры. В последующие годы в музейном парке стали проводить мероприятия, фольклорные концерты, снимать фильмы. Дважды музей встречал участников Международного фестиваля финно-угорских народов.

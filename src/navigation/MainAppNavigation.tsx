@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import {NavigationContainer} from '@react-navigation/native';
 
@@ -35,6 +35,8 @@ import AboutPage from '../screens/About/AboutPage';
 import River from '../screens/About/River';
 import Alexsander from '../screens/About/Alexsander';
 import Info from '../screens/About/Info';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
+import TrackPlayer from 'react-native-track-player';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -130,7 +132,11 @@ const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
   },
 };
 
+
+
 const MainAppNavigation = () => {
+
+
   return (
     <>
       <Tab.Navigator

@@ -1,14 +1,15 @@
 import React from 'react';
-import {Platform, View, StyleSheet, Text, Pressable} from 'react-native';
+import { Platform, View, StyleSheet, Text, Pressable } from 'react-native';
 
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors} from '../../../assets/colors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { colors } from '../../../assets/colors';
 import Drawer_icon from '../../../assets/icons/Drawer_icon';
-import {open as openDrawer} from '../../store/drawerModel';
+import { open as openDrawer } from '../../store/drawerModel';
 import Arrow_right from '../../../assets/icons/Arrow_right';
+import TrackPlayer from 'react-native-track-player';
 
 type TStyle = 'dark' | 'light';
 
@@ -27,20 +28,19 @@ const CustomHeader = ({
   const insets = useSafeAreaInsets();
   const route = useRoute();
   const navigationHook = useNavigation();
-  console.log(customTitle);
 
   //go back button
   const navigationScreens = () => {
     const parent = navigation?.canGoBack();
     if (route.params && route?.params?.history) {
       const goToScreen = route?.params?.history[0].key.split('-')[0];
-     return navigation?.navigate(goToScreen);
-    } 
+      return navigation?.navigate(goToScreen);
+    }
     return navigationHook.navigate('Main');
   };
 
   return (
-    <View style={[styles.header, {paddingTop: insets.top}]}>
+    <View style={[styles.header, { paddingTop: insets.top }]}>
       <Text style={styles.title}>{customTitle ?? title}</Text>
       <Pressable
         hitSlop={10}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     top: Platform.OS === 'ios' ? 10 : 10,
     zIndex: 1,
 
-    transform: [{rotateZ: '180deg'}],
+    transform: [{ rotateZ: '180deg' }],
   },
   drawer: {
     position: 'absolute',

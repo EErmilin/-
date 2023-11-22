@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -7,7 +7,8 @@ import MainAppNavigation from './src/navigation/MainAppNavigation';
 
 import { colors } from './assets/colors';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import TrackPlayer from 'react-native-track-player';
 
 // Create a context for your store
 const StoreContext = createContext({});
