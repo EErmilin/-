@@ -15,7 +15,6 @@
     ]
   },
   "dependencies": {
-    "@directus/sdk": "^13.0.2",
     "@react-native-community/slider": "^4.4.3",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/drawer": "^6.6.4",

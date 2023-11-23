@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, Image, SafeAreaView } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -6,8 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Video from 'react-native-video';
-//
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
 import { colors } from '../../../assets/colors';
 import { images } from '../../../assets/images/images';
@@ -28,7 +27,7 @@ import CustomHeader from '../../navigation/components/CustomHeader';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fetchItems } from '../../api/directusService';
 import { useStore } from '../../../App';
-import TrackPlayer from 'react-native-track-player';
+import Play_btn from '../../../assets/icons/Play_btn';
 
 
 
@@ -40,7 +39,13 @@ const Main = () => {
   const animatedTextOpacity = useSharedValue(0);
   const animateBlocks = useSharedValue(-200);
   const animateRotation = useSharedValue('0deg');
-  const navigation = useNavigation();
+  const navigation = useNavigation()
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   const textAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -90,6 +95,8 @@ const Main = () => {
   useEffect(() => {
     fetchData()
   }, [])
+  console.log('!!!!!!!!!!!')
+  console.log(isPlaying)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
@@ -166,21 +173,30 @@ const Main = () => {
               }}
             />
           </Animated.View>
-   {//       <Home_Park_icon onPress={() => { }} />
-   }
+          {//       <Home_Park_icon onPress={() => { }} />
+          }
         </Animated.View>
         {/* VIDEO */}
-        <View style={styles.videoContainer}>
+        <TouchableWithoutFeedback style={styles.videoContainer} onPress={handlePlayPause}>
           <Video
+
+            ref={videoRef}
             source={require('../../../assets/video/Rolik.mp4')}
             style={styles.backgroundVideo}
-            paused ={false}
-           //controls
+            paused={!isPlaying}
+            controls={false}
             repeat={false}
             progressUpdateInterval={250.0}
             resizeMode="contain"
+            disableFullscreen={true}
           />
-        </View>
+          {!isPlaying && <View style={styles.controls}>
+            <TouchableOpacity style={styles.controlButton}>
+              <Play_btn />
+            </TouchableOpacity>
+          </View>}
+        </TouchableWithoutFeedback>
+
         <Animated.View
 
           style={[
@@ -206,6 +222,26 @@ const Main = () => {
 export default Main;
 
 const styles = StyleSheet.create({
+  controls: {
+    position: 'absolute',
+    bottom: '50%',
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  controlButton: {
+    width: 60,
+    height:60,
+    marginHorizontal: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 1,
+    borderColor: colors.blue,
+    display: 'flex',
+    alignItems:'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+  },
   container: {
     // paddingTop: 60,
     flex: 1,
@@ -251,15 +287,18 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -15 }],
   },
   videoContainer: {
+    position: 'relative',
+    height: 300,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
   },
   backgroundVideo: {
+    flex: 1,
     backgroundColor: '#000',
     width: '95%',
- 
+
     height: 250,
     marginBottom: 60,
   },

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, Image, StyleSheet, View, useWindowDimensions, TouchableOpacity } from 'react-native';
-import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
-import Play_btn from '../../../assets/icons/Play_btn';
 import ExhibitTitle from '../../navigation/components/ExhibitTitle';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import { useStore } from '../../../App';
