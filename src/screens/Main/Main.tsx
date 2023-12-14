@@ -30,8 +30,6 @@ import { useStore } from '../../../App';
 import Play_btn from '../../../assets/icons/Play_btn';
 
 
-const posterImage = require('../../../assets/images/video.jpg');
-
 
 const Main = () => {
   const { state, dispatch }: any = useStore();
@@ -187,10 +185,6 @@ const Main = () => {
           }
         </Animated.View>
         {/* VIDEO */}
-        <Image 
-  source={posterImage}
-  style={{ width: 200, height: 200 }}
-/>
         <TouchableWithoutFeedback style={styles.videoContainer} onPress={handlePlayPause}>
           <Video
             ref={videoRef}
@@ -203,7 +197,6 @@ const Main = () => {
             resizeMode="contain"
             disableFullscreen={true}
             
-            poster={{posterImage}}
           />
           {!isPlaying && <View style={styles.controls}>
             <TouchableOpacity style={styles.controlButton}>
