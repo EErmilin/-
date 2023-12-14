@@ -114,7 +114,6 @@ const Alexsander = (props) => {
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <Text style={styles.title}>Александр Павлович Ядрошников</Text>
             <Image
               source={require('../../../assets/images/alexander.jpg')}
               style={styles.imageStyle}
@@ -226,6 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   infoText: {
+    color: 'gray',
     fontSize: 16,
     lineHeight: 20,
     marginTop: 22,

@@ -8,7 +8,6 @@ import MainAppNavigation from './src/navigation/MainAppNavigation';
 import { colors } from './assets/colors';
 
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import TrackPlayer from 'react-native-track-player';
 
 // Create a context for your store
 const StoreContext = createContext({});

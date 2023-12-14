@@ -23,7 +23,7 @@ interface ExHibitProps {
   description: string;
 }
 
-const River = ({props}) => {
+const River = ({ props }) => {
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
@@ -60,7 +60,6 @@ const River = ({props}) => {
 
   return (
     <>
-      <CustomHeader title="История музея" />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           {/* SLIDER */}
@@ -109,8 +108,8 @@ const River = ({props}) => {
           </View>
           {/* VOICE */}
           <View style={styles.voiceContainer}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <AudioPlayer audio={"https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav"}/>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <AudioPlayer audio={"https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav"} />
             </View>
           </View>
 
@@ -148,6 +147,11 @@ const River = ({props}) => {
               взаимопроникновении, выработанном веками, коренится живучесть
               хантыйских традиций. Мир, река, земля, созданные Торумом, красивы
               и достойны восхищения,любви и бережного отношения.
+            </Text>
+            <Text style={styles.infoText}>
+              The concept of the museum exposition The world of the Sacred Trom-Agan River can be defined as "culture in the swirling waters of the River of Time". Traditional culture of the Khanty, which provides a good example of harmonious coexistence and unity of Man and Nature, has undergone dramatic changes in recent years. Traditional household items disappear from everyday life, as well as symbols of people’s culture, through which younger generations acquire it. Under these conditions museums are becoming the most important institution for preservation, revival and transfer of the ethnic traditions, as they keep cultural objects representing material and spiritual aspects of the nation’s culture. The Russkinskoy Museum of Nature and Man named after Yadroshnikov Aleksander Pavlovich reconstructs traditional culture of the Khanty people on the basis of exclusive Trom-Agan items; it reflects the unique features of this ethno-territorial group and underlines its importance in the culture of the Sacred Trom-Agan River.
+              The World of the Sacred Trom-Agan River exposition is designed not only to get into the intimate subjects of the Khanty traditional worldview, but also to reveal the natural diversity of the river through the unique taxidermic collection of A.P. Yadroshnikov. Within it, with great love and skill the author recreated the world of animals and birds that live along the banks of the river. He did it just like a man who belongs here. The exposition reveals the role of the river in the economic sphere of the Khanty culture, which is rich in traditions of river fishing with the use of various traps, locks, fishing gear, water vehicles, a dugout boat.
+              All in all, the authors of the exposition tried to use it to create an idea of the culture of the Trom-Agan Khanty as a living organism in which all parts are interconnected with each other and the surrounding nature. In this interaction, worked out over centuries, the vitality of the Khanty traditions is rooted. The world, the river, the land created by Torum are beautiful and worthy of admiration, love and care.
             </Text>
           </View>
         </ScrollView>
@@ -245,6 +249,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   infoText: {
+    color: 'gray',
     fontSize: 16,
     lineHeight: 20,
     marginTop: 22,

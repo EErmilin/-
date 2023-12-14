@@ -103,8 +103,6 @@ const ExHibit = ({ route }) => {
           </View>
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <ExhibitTitle>{current.name}</ExhibitTitle>
-
             <HTML contentWidth={width} source={{ html: current.description }} tagsStyles={tagsStyles} />
           </View>
         </ScrollView>

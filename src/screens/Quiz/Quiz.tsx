@@ -20,7 +20,7 @@ const quizArray = [
   },
   {
     question: 'В каком году создатель музея Александр Павлович Ядрошников награжден Почетной грамотой Президента Российской Федерации?',
-    answers: [{ value: '2014', isCorrect: true }, { value: 'Гагара', isCorrect: false }, { value: '2022', isCorrect: false }]
+    answers: [{ value: '2014', isCorrect: true }, { value: '2019', isCorrect: false }, { value: '2022', isCorrect: false }]
   },
   {
     question: 'Обские угры – это',
@@ -97,7 +97,6 @@ const Quiz = (props) => {
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <ExhibitTitle>Викторина о музее</ExhibitTitle>
             <Text style={styles.infoText}>
               {carrentQuestion.question}
             </Text>
@@ -130,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
+    color: 'gray',
     textAlign: 'center',
     fontSize: 16,
     lineHeight: 20,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 0,
   },
   answer: {
     width: "100%",

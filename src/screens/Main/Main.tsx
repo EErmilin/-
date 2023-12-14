@@ -30,6 +30,7 @@ import { useStore } from '../../../App';
 import Play_btn from '../../../assets/icons/Play_btn';
 
 
+const posterImage = require('../../../assets/images/video.jpg');
 
 
 const Main = () => {
@@ -95,8 +96,6 @@ const Main = () => {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log('!!!!!!!!!!!')
-  console.log(isPlaying)
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
@@ -173,35 +172,6 @@ const Main = () => {
               }}
             />
           </Animated.View>
-          {//       <Home_Park_icon onPress={() => { }} />
-          }
-        </Animated.View>
-        {/* VIDEO */}
-        <TouchableWithoutFeedback style={styles.videoContainer} onPress={handlePlayPause}>
-          <Video
-
-            ref={videoRef}
-            source={require('../../../assets/video/Rolik.mp4')}
-            style={styles.backgroundVideo}
-            paused={!isPlaying}
-            controls={false}
-            repeat={false}
-            progressUpdateInterval={250.0}
-            resizeMode="contain"
-            disableFullscreen={true}
-          />
-          {!isPlaying && <View style={styles.controls}>
-            <TouchableOpacity style={styles.controlButton}>
-              <Play_btn />
-            </TouchableOpacity>
-          </View>}
-        </TouchableWithoutFeedback>
-
-        <Animated.View
-
-          style={[
-            styles.bigButtons_wrapper,
-          ]}>
           <TouchableWithoutFeedback
             onPress={() => {
               navigation.navigate('Quiz');
@@ -212,8 +182,35 @@ const Main = () => {
 
             />
           </TouchableWithoutFeedback>
-        </Animated.View>
 
+          {//       <Home_Park_icon onPress={() => { }} />
+          }
+        </Animated.View>
+        {/* VIDEO */}
+        <Image 
+  source={posterImage}
+  style={{ width: 200, height: 200 }}
+/>
+        <TouchableWithoutFeedback style={styles.videoContainer} onPress={handlePlayPause}>
+          <Video
+            ref={videoRef}
+            source={require('../../../assets/video/Rolik.mp4')}
+            style={styles.backgroundVideo}
+            paused={!isPlaying}
+            controls={false}
+            repeat={false}
+            progressUpdateInterval={250.0}
+            resizeMode="contain"
+            disableFullscreen={true}
+            
+            poster={{posterImage}}
+          />
+          {!isPlaying && <View style={styles.controls}>
+            <TouchableOpacity style={styles.controlButton}>
+              <Play_btn />
+            </TouchableOpacity>
+          </View>}
+        </TouchableWithoutFeedback>
       </ScrollView>
     </SafeAreaView>
   );
@@ -232,13 +229,13 @@ const styles = StyleSheet.create({
   },
   controlButton: {
     width: 60,
-    height:60,
+    height: 60,
     marginHorizontal: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderWidth: 1,
     borderColor: colors.blue,
     display: 'flex',
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 100,
   },
@@ -247,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   img: {
-    width: 320,
+    width: 300,
     height: 120,
   },
   logo_container: {

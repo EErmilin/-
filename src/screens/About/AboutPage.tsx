@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   infoText: {
+    color: 'gray',
     fontSize: 16,
     lineHeight: 20,
     marginTop: 22,

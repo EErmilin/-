@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, { useProgress } from 'react-native-track-player';
 import Slider from '@react-native-community/slider';
 import Play_btn from '../../assets/icons/Play_btn';
 import { colors } from '../../assets/colors';
-import Aplitude from '../../assets/icons/aplitude';
+import Stop from '../../assets/icons/stop';
 import { useNavigationState } from '@react-navigation/native';
 
 const initializeTrackPlayer = async () => {
@@ -19,8 +19,7 @@ const initializeTrackPlayer = async () => {
 
 export default function MusicPlayer({ audio }) {
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [trackPosition, setTrackPosition] = React.useState(0);
-  const [trackDuration, setTrackDuration] = React.useState(0);
+  const { position, duration } = useProgress();
 
   const navigationState = useNavigationState(state => state);
   React.useEffect(() => {
@@ -31,7 +30,7 @@ export default function MusicPlayer({ audio }) {
 
   useEffect(() => {
     initializeTrackPlayer();
-  })
+  },[audio])
 
   React.useEffect(() => {
     (async () => {
@@ -46,6 +45,12 @@ export default function MusicPlayer({ audio }) {
       }
     })();
   }, [audio, isPlaying]);
+
+  useEffect(() => {
+    console.log(position)
+    console.log(duration)
+    if (position >= duration) setIsPlaying(false)
+  }, [position])
 
 
 
@@ -78,12 +83,21 @@ export default function MusicPlayer({ audio }) {
           borderColor: colors.blue,
           justifyContent: 'center',
           alignItems: 'center',
-          marginRight: 18
+          marginRight: 10,
         }}
         onPress={togglePlayback}>
-        {isPlaying ? <Text style={{ color: "black", fontSize: 20, marginTop: -5 }}>||</Text> : < Play_btn />}
+        {isPlaying ? <Stop /> : < Play_btn />}
       </TouchableOpacity>
-      <Aplitude />
+
+      <Slider
+        width={250}
+        minimumValue={0}
+        value={position}
+        maximumValue={duration}
+        onValueChange={handleSeek}
+        minimumTrackTintColor={colors.blue}
+        maximumTrackTintColor="#000000"
+      />
     </View>
   );
 }

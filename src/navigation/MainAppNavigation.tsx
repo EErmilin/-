@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import TopDrawerMenu from './components/TopDrawerMenu';
-import {TabParamList, TMainAppPage} from './types/TabTypes';
+import { TabParamList, TMainAppPage } from './types/TabTypes';
 
 import CustomHeader from './components/CustomHeader';
 
@@ -53,31 +53,31 @@ export const PAGES: Array<TMainAppPage> = [
     icon: <MenuAbout_icon />,
     screen: About,
   },
- // {
- //   name: 'Fund',
- //   title: 'Фонды',
- //   icon: <MenuFund_icon />,
- //   screen: Fund,
- // },
+  // {
+  //   name: 'Fund',
+  //   title: 'Фонды',
+  //   icon: <MenuFund_icon />,
+  //   screen: Fund,
+  // },
   {
     name: 'Exposition',
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
     icon: <MenuExposition_icon />,
     screen: River// Exposition,
   },
- // {
- //   name: 'Park',
- //   title: 'Музейный этнографический парк «Земля предков»',
- //   icon: <MenuPark_icon />,
- //   screen: Park,
- // },
+  // {
+  //   name: 'Park',
+  //   title: 'Музейный этнографический парк «Земля предков»',
+  //   icon: <MenuPark_icon />,
+  //   screen: Park,
+  // },
 
- // {
- //   name: 'TourismFeature',
- //   title: 'Туристический потенциал территории',
- //   icon: <MenuTourismFeature_icon />,
- //   screen: TourismFeature,
- // },
+  // {
+  //   name: 'TourismFeature',
+  //   title: 'Туристический потенциал территории',
+  //   icon: <MenuTourismFeature_icon />,
+  //   screen: TourismFeature,
+  // },
   {
     name: 'Quiz',
     title: 'Викторина о музее',
@@ -123,7 +123,7 @@ export const PAGES: Array<TMainAppPage> = [
 ];
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
-  tabBarStyle: {height: 0},
+  tabBarStyle: { height: 0 },
   // headerShown: true,
   headerTransparent: true,
   headerStyle: {
@@ -142,7 +142,7 @@ const MainAppNavigation = () => {
       <Tab.Navigator
         initialRouteName={PAGES[0].name}
         screenOptions={NAVIGATION_OPTIONS}
-        backBehavior={'none'}
+        backBehavior={'history'}
         tabBar={props => <CustomTabBar {...props} />}>
         {PAGES.map(page => (
           <Tab.Screen

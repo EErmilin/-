@@ -59,7 +59,6 @@ const Info = () => {
 
   return (
     <>
-      <CustomHeader title="История музея" />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           { /*       
@@ -116,17 +115,19 @@ const Info = () => {
           {/* INFO */}
           <View style={styles.infoContainer}>
             <Text style={styles.infoText}>
-              РЕЖИМ РАБОТЫ
+            {`РЕЖИМ РАБОТЫ
 
-              Ср-вс - 10:00-17:00
-              Пн-вт - выходной
+Ср-вс - 10:00-17:00
+Пн-вт - выходной
 
-              Адрес
-              628446, ХМАО–Югра, Сургутский р-н, с.п. Русскинская, ул. Русскиных, д.28
-              Телефон
-              +7 (3462) 73-79-49, +7 (3462) 73-79-36
-              E-mail
-              rusmuseum1988@yandex.ru
+Адрес
+628446, ХМАО–Югра, Сургутский р-н, с.п. Русскинская, ул. Русскиных, д.28
+
+Телефон
++7 (3462) 73-79-49, +7 (3462) 73-79-36
+
+E-mail
+rusmuseum1988@yandex.ru`}
             </Text>
           </View>
         </ScrollView>
@@ -224,6 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   infoText: {
+    color: 'gray',
     fontSize: 16,
     lineHeight: 20,
     marginTop: 22,

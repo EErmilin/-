@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
 import Drawer_icon from '../../../assets/icons/Drawer_icon';
 import { open as openDrawer } from '../../store/drawerModel';
-import Arrow_right from '../../../assets/icons/Arrow_right';
+import Arrow_right_header from '../../../assets/icons/Arrow_right_header';
 import TrackPlayer from 'react-native-track-player';
 
 type TStyle = 'dark' | 'light';
@@ -39,6 +39,9 @@ const CustomHeader = ({
     return navigationHook.navigate('Main');
   };
 
+  console.log('!!!!!!!!')
+  console.log(title)
+
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
       <Text style={styles.title}>{customTitle ?? title}</Text>
@@ -55,7 +58,7 @@ const CustomHeader = ({
           hitSlop={10}
           onPress={navigationScreens}>
           <View style={styles.arrow}>
-            <Arrow_right />
+            <Arrow_right_header />
           </View>
         </Pressable>
       )}
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     top: Platform.OS === 'ios' ? 10 : 10,
     zIndex: 1,
 
-    transform: [{ rotateZ: '180deg' }],
+
   },
   drawer: {
     position: 'absolute',
@@ -93,13 +96,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff90',
   },
   title: {
-    fontSize: 16,
-    lineHeight: 14,
-    color: colors.blue,
+    maxWidth:300,
+    fontSize: 24,
+    lineHeight: 18,
+    color: '#2B2B2B',
     width: '100%',
     textAlign: 'center',
     letterSpacing: 2,
-    paddingTop: 5,
+    paddingTop: 10,
     fontFamily: 'OzHandicraftCyrillicBT',
   },
   arrow: {
