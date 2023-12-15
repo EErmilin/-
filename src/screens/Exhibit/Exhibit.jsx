@@ -6,21 +6,23 @@ import Arrow_right from '../../../assets/icons/Arrow_right';
 import ExhibitTitle from '../../navigation/components/ExhibitTitle';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import { useStore } from '../../../App';
-
+import ImageView from "react-native-image-viewing";
 import HTML from 'react-native-render-html';
 import { useRef } from 'react';
 import Left_arrow from '../../../assets/icons/Left_arrow';
 import { useEffect } from 'react';
 import MusicPlayer from '../../components/Audio';
+import ImagesModal from './components/ImagesModal/ImagesModal';
 
 const ExHibit = ({ route }) => {
   const { state } = useStore();
   const current = state.exhibits.find((item) => item.id == route.params.uuid)
   const imgArray = current.images.map(img => img.directus_files_id ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}` : null);
+  const audios = current.audios.map(audio => audio.directus_files_id ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}` : null);
   const { width } = useWindowDimensions()
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
-
+  const [visible, setIsVisible] = useState(-1);
   const refImage = useRef(null);
   const nextSlider = () => {
     if (active === imgArray.length - 1) return
@@ -40,6 +42,7 @@ const ExHibit = ({ route }) => {
     refImage?.current?.scrollTo({ x: layoutX, animated: true });
   }, [layoutX])
 
+
   const tagsStyles = {
     body: {
       whiteSpace: 'normal',
@@ -58,18 +61,27 @@ const ExHibit = ({ route }) => {
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              scrollEnabled={true}
+              scrollEnabled={false}
               ref={refImage}>
               {imgArray.map((image, i) => {
                 return (
-                  <Image
-                    source={{ uri: image }}
-                    style={styles.imageStyle}
-                    resizeMode="contain"
-                    key={i}
-                  />
+                  <TouchableOpacity onPress={() => setIsVisible(i)}>
+                    <Image
+                      source={{ uri: image }}
+                      style={styles.imageStyle}
+                      resizeMode="contain"
+                      key={i}
+                    />
+
+                  </TouchableOpacity>
                 );
               })}
+                    <ImageView
+                      images={imgArray.map((item) => { return { uri: item } })}
+                      imageIndex={visible}
+                      visible={visible>-1 ? true : false}
+                      onRequestClose={() => setIsVisible(-1)}
+                    />
             </ScrollView>
             <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
               <Arrow_right />
@@ -97,9 +109,9 @@ const ExHibit = ({ route }) => {
             </View>
           </View> : null}
           {/* VOICE */}
-          <View style={styles.voiceContainer}>
 
-            {current.audio && <MusicPlayer audio={`https://museum.mobility.tw1.ru/assets/${current.audio}.wav`} />}
+          <View style={styles.voiceContainer}>
+            {audios?.length && audios.map((item, key) => <MusicPlayer key={key} audio={item} />)}
           </View>
           {/* INFO */}
           <View style={styles.infoContainer}>
@@ -190,7 +202,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   voiceContainer: {
-    flexDirection: 'row',
+    //flexDirection: 'col',
     marginTop: 20,
     alignSelf: 'stretch',
   },

@@ -64,6 +64,7 @@ export default function MusicPlayer({ audio }) {
   };
 
   const handleSeek = async (value) => {
+    if(!isPlaying)return
     await TrackPlayer.seekTo(value);
   };
 
