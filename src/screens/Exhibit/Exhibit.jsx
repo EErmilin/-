@@ -1,47 +1,62 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, Image, StyleSheet, View, useWindowDimensions, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '../../../assets/colors';
+import React, {useState} from 'react';
+import {
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {colors} from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
 import ExhibitTitle from '../../navigation/components/ExhibitTitle';
 import CustomHeader from '../../navigation/components/CustomHeader';
-import { useStore } from '../../../App';
-import ImageView from "react-native-image-viewing";
+import {useStore} from '../../../App';
+import ImageView from 'react-native-image-viewing';
 import HTML from 'react-native-render-html';
-import { useRef } from 'react';
+import {useRef} from 'react';
 import Left_arrow from '../../../assets/icons/Left_arrow';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import MusicPlayer from '../../components/Audio';
 import ImagesModal from './components/ImagesModal/ImagesModal';
 
-const ExHibit = ({ route }) => {
-  const { state } = useStore();
-  const current = state.exhibits.find((item) => item.id == route.params.uuid)
-  const imgArray = current.images.map(img => img.directus_files_id ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}` : null);
-  const audios = current.audios.map(audio => audio.directus_files_id ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}` : null);
-  const { width } = useWindowDimensions()
+const ExHibit = ({route}) => {
+  const {state} = useStore();
+  const current = state.exhibits?.find(item => item.id == route.params.uuid);
+  const imgArray = current.images.map(img =>
+    img.directus_files_id
+      ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
+      : null,
+  );
+  const audios = current.audios.map(audio =>
+    audio.directus_files_id
+      ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}`
+      : null,
+  );
+  const {width} = useWindowDimensions();
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
   const [visible, setIsVisible] = useState(-1);
   const refImage = useRef(null);
   const nextSlider = () => {
-    if (active === imgArray.length - 1) return
+    if (active === imgArray.length - 1) return;
     setActive(active + 1);
     setLayoutX(layoutX + 320);
     console.log(layoutX);
   };
 
   const prevSlider = () => {
-    if (active === 0) return
+    if (active === 0) return;
     setActive(active - 1);
     setLayoutX(layoutX - 320);
     console.log(layoutX);
   };
 
   useEffect(() => {
-    refImage?.current?.scrollTo({ x: layoutX, animated: true });
-  }, [layoutX])
-
+    refImage?.current?.scrollTo({x: layoutX, animated: true});
+  }, [layoutX]);
 
   const tagsStyles = {
     body: {
@@ -50,72 +65,79 @@ const ExHibit = ({ route }) => {
     },
   };
 
-  if (!current) return
+  if (!current) return;
   return (
     <>
       <CustomHeader customTitle={current.name} />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           {/* SLIDER */}
-          {imgArray && imgArray.length && imgArray[0] ? <View style={styles.slider}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEnabled={false}
-              ref={refImage}>
-              {imgArray.map((image, i) => {
-                return (
-                  <TouchableOpacity onPress={() => setIsVisible(i)}>
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.imageStyle}
-                      resizeMode="contain"
-                      key={i}
+          {imgArray && imgArray.length && imgArray[0] ? (
+            <View style={styles.slider}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                scrollEnabled={false}
+                ref={refImage}>
+                {imgArray.map((image, i) => {
+                  return (
+                    <TouchableOpacity onPress={() => setIsVisible(i)}>
+                      <Image
+                        source={{uri: image}}
+                        style={styles.imageStyle}
+                        resizeMode="contain"
+                        key={i}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+                <ImageView
+                  images={imgArray.map(item => {
+                    return {uri: item};
+                  })}
+                  imageIndex={visible}
+                  visible={visible > -1 ? true : false}
+                  onRequestClose={() => setIsVisible(-1)}
+                />
+              </ScrollView>
+              <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
+                <Arrow_right />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.arrow, styles.left]}
+                onPress={prevSlider}>
+                <Left_arrow />
+              </TouchableOpacity>
+              <View style={styles.dotsContainer}>
+                {imgArray.map((_, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[
+                        styles.dots,
+                        {
+                          backgroundColor:
+                            active === index ? colors.blue : colors.yellow,
+                        },
+                      ]}
                     />
-
-                  </TouchableOpacity>
-                );
-              })}
-                    <ImageView
-                      images={imgArray.map((item) => { return { uri: item } })}
-                      imageIndex={visible}
-                      visible={visible>-1 ? true : false}
-                      onRequestClose={() => setIsVisible(-1)}
-                    />
-            </ScrollView>
-            <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
-              <Arrow_right />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrow, styles.left]}
-              onPress={prevSlider}>
-              <Left_arrow />
-            </TouchableOpacity>
-            <View style={styles.dotsContainer}>
-              {imgArray.map((_, index) => {
-                return (
-                  <View
-                    key={index}
-                    style={[
-                      styles.dots,
-                      {
-                        backgroundColor:
-                          active === index ? colors.blue : colors.yellow,
-                      },
-                    ]}
-                  />
-                );
-              })}
+                  );
+                })}
+              </View>
             </View>
-          </View> : null}
+          ) : null}
           {/* VOICE */}
 
           <View style={styles.voiceContainer}>
-            {audios?.length && audios.map((item, key) => <MusicPlayer key={key} audio={item} />)}
+            <MusicPlayer audio={audios} />
           </View>
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <HTML contentWidth={width} source={{ html: current.description }} tagsStyles={tagsStyles} />
+            <HTML
+              contentWidth={width}
+              source={{html: current.description}}
+              tagsStyles={tagsStyles}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -126,7 +148,6 @@ const ExHibit = ({ route }) => {
 export default ExHibit;
 
 const styles = StyleSheet.create({
-
   left: {
     width: 30,
     height: 30,
@@ -156,7 +177,7 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
-    height: 600
+    height: 600,
   },
   container: {
     flex: 1,
@@ -168,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{ translateX: 300 / 2 }],
+    transform: [{translateX: 300 / 2}],
     flexDirection: 'row',
     gap: 4,
   },
@@ -176,7 +197,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     alignItems: 'center',
   },
-  slider: { height: 161 },
+  slider: {height: 161},
   arrow: {
     width: 30,
     height: 30,
@@ -194,7 +215,7 @@ const styles = StyleSheet.create({
     width: 10,
     aspectRatio: 1,
     backgroundColor: colors.blue,
-    display: "flex",
+    display: 'flex',
     // position: 'absolute',
     // bottom: -10,
     // left: 300 / 2,
@@ -205,6 +226,7 @@ const styles = StyleSheet.create({
     //flexDirection: 'col',
     marginTop: 20,
     alignSelf: 'stretch',
+    width: '100%',
   },
   play: {
     width: 40,
@@ -220,7 +242,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     alignSelf: 'stretch',
     marginTop: 30,
-    paddingBottom: 50
+    paddingBottom: 50,
   },
   infoText: {
     maxWidth: '100%',
@@ -229,7 +251,6 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
 });
-
 
 //<HTMLView
 //value={carrent.description}
