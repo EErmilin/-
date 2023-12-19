@@ -16,7 +16,7 @@ import ExhibitTitle from '../../navigation/components/ExhibitTitle';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import {useStore} from '../../../App';
 import ImageView from 'react-native-image-viewing';
-import HTML, {RenderHTML} from 'react-native-render-html';
+import HTML from 'react-native-render-html';
 import {useRef} from 'react';
 import Left_arrow from '../../../assets/icons/Left_arrow';
 import {useEffect} from 'react';
@@ -27,7 +27,7 @@ import {useNavigation} from '@react-navigation/native';
 const ExHibit = ({route}) => {
   const {state} = useStore();
   const navigation = useNavigation();
-  const current = state.exhibits.find(item => item.id == route.params.uuid);
+  const current = state.exhibits?.find(item => item.id == route.params.uuid);
   const imgArray = current.images.map(img =>
     img.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
@@ -132,12 +132,11 @@ const ExHibit = ({route}) => {
           {/* VOICE */}
 
           <View style={styles.voiceContainer}>
-            {audios?.length &&
-              audios.map((item, key) => <MusicPlayer key={key} audio={item} />)}
+            <MusicPlayer audio={audios} />
           </View>
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <RenderHTML
+            <HTML
               contentWidth={width}
               source={{html: current.description}}
               tagsStyles={tagsStyles}
@@ -247,6 +246,7 @@ const styles = StyleSheet.create({
     //flexDirection: 'col',
     marginTop: 20,
     alignSelf: 'stretch',
+    width: '100%',
   },
   play: {
     width: 40,

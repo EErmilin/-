@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
 // import {NavigationContainer} from '@react-navigation/native';
 
@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import TopDrawerMenu from './components/TopDrawerMenu';
-import { TabParamList, TMainAppPage } from './types/TabTypes';
+import {TabParamList, TMainAppPage} from './types/TabTypes';
 
 import CustomHeader from './components/CustomHeader';
 
@@ -35,7 +35,7 @@ import AboutPage from '../screens/About/AboutPage';
 import River from '../screens/About/River';
 import Alexsander from '../screens/About/Alexsander';
 import Info from '../screens/About/Info';
-import { useNavigation, useNavigationState } from '@react-navigation/native';
+import {useNavigation, useNavigationState} from '@react-navigation/native';
 import TrackPlayer from 'react-native-track-player';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -63,7 +63,7 @@ export const PAGES: Array<TMainAppPage> = [
     name: 'Exposition',
     title: 'Экспозиция «Мир священной реки Тром-Аган»',
     icon: <MenuExposition_icon />,
-    screen: River// Exposition,
+    screen: River, // Exposition,
   },
   // {
   //   name: 'Park',
@@ -119,11 +119,11 @@ export const PAGES: Array<TMainAppPage> = [
     title: 'Для посетитилей',
     icon: null,
     screen: Info,
-  }
+  },
 ];
 
 const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
-  tabBarStyle: { height: 0 },
+  tabBarStyle: {height: 0},
   // headerShown: true,
   headerTransparent: true,
   headerStyle: {
@@ -132,10 +132,12 @@ const NAVIGATION_OPTIONS: BottomTabNavigationOptions = {
   },
 };
 
-
-
 const MainAppNavigation = () => {
-
+  React.useEffect(() => {
+    TrackPlayer.setupPlayer().catch(err =>
+      console.error('TrackPlayer.setupPlayer: ', err),
+    );
+  }, []);
 
   return (
     <>
@@ -152,7 +154,9 @@ const MainAppNavigation = () => {
             options={{
               // eslint-disable-next-line react/no-unstable-nested-components
               header: ({navigation}) =>
-                page.name !== 'Main' && page.name!=='Details' && page.name !== 'Photo' && (
+                page.name !== 'Main' &&
+                page.name !== 'Details' &&
+                page.name !== 'Photo' && (
                   <CustomHeader navigation={navigation} title={page.title} />
                 ),
               tabBarButton: () => null,
