@@ -7,6 +7,7 @@ import {
   View,
   useWindowDimensions,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '../../../assets/colors';
@@ -21,9 +22,11 @@ import Left_arrow from '../../../assets/icons/Left_arrow';
 import {useEffect} from 'react';
 import MusicPlayer from '../../components/Audio';
 import ImagesModal from './components/ImagesModal/ImagesModal';
+import {useNavigation} from '@react-navigation/native';
 
 const ExHibit = ({route}) => {
   const {state} = useStore();
+  const navigation = useNavigation();
   const current = state.exhibits.find(item => item.id == route.params.uuid);
   const imgArray = current.images.map(img =>
     img.directus_files_id
@@ -141,7 +144,17 @@ const ExHibit = ({route}) => {
               renderersProps={{
                 a: {
                   onPress(event, url, htmlAttribs, target) {
-                    // Do stuff
+                    if (url.includes('exhibits')) {
+                      const parts = url.split('/');
+                      var uuid = parts[parts.length - 1];
+                      navigation.navigate('Details', {uuid: uuid});
+                    } else {
+                      Linking.canOpenURL(url).then(supported => {
+                        if (supported) {
+                          Linking.openURL(url);
+                        }
+                      });
+                    }
                   },
                 },
               }}

@@ -1,4 +1,12 @@
-import { ScrollView, StyleSheet, View, Image, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -6,10 +14,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Video from 'react-native-video';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Logo_icon from '../../../assets/icons/Logo_icon';
-import { colors } from '../../../assets/colors';
-import { images } from '../../../assets/images/images';
+import {colors} from '../../../assets/colors';
+import {images} from '../../../assets/images/images';
 import QrCode_icon from '../../../assets/icons/QrCode_icon';
 import Button from '../../components/base/Button';
 import Map_icon from '../../../assets/icons/Map_icon';
@@ -17,28 +25,26 @@ import River_icon from '../../../assets/icons/River_icon';
 import Home_About_icon from '../../../assets/icons/Home_About_icon';
 import Home_Exposition_icon from '../../../assets/icons/Home_Exposition_icon';
 import Home_Park_icon from '../../../assets/icons/Home_Park_icon';
-import { SharedElement } from 'react-navigation-shared-element';
+import {SharedElement} from 'react-navigation-shared-element';
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
 import CustomHeader from '../../navigation/components/CustomHeader';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { fetchItems } from '../../api/directusService';
-import { useStore } from '../../../App';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {fetchItems} from '../../api/directusService';
+import {useStore} from '../../../App';
 import Play_btn from '../../../assets/icons/Play_btn';
 
-
-
 const Main = () => {
-  const { state, dispatch }: any = useStore();
+  const {state, dispatch}: any = useStore();
   const routes = useRoute();
   const animatedText = useSharedValue(15);
   const animatedTextOpacity = useSharedValue(0);
   const animateBlocks = useSharedValue(-200);
   const animateRotation = useSharedValue('0deg');
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -48,19 +54,18 @@ const Main = () => {
 
   const textAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: animatedText.value }],
+      transform: [{translateY: animatedText.value}],
       opacity: animatedTextOpacity.value,
     };
   });
 
-
   useEffect(() => {
     //animation if SplashScreen
     if (routes.params?.screen === 'Splash') {
-      animatedText.value = withDelay(400, withTiming(0, { duration: 200 }));
+      animatedText.value = withDelay(400, withTiming(0, {duration: 200}));
       animatedTextOpacity.value = withDelay(
         400,
-        withTiming(1, { duration: 200 }),
+        withTiming(1, {duration: 200}),
       );
     }
   }, [animatedText, routes.params?.screen, animatedTextOpacity]);
@@ -72,7 +77,7 @@ const Main = () => {
         animateBlocks.value = withTiming(animateBlocks.value + 200, {
           duration: 400,
         });
-        animateRotation.value = withTiming('360deg', { duration: 400 });
+        animateRotation.value = withTiming('360deg', {duration: 400});
       }
     }, [animateBlocks, animateRotation, routes]),
   );
@@ -84,26 +89,24 @@ const Main = () => {
     };
   }, [animateBlocks, animateRotation]);
 
-
-
   const fetchData = async () => {
     const data = await fetchItems('exhibits');
-    dispatch({ type: 'setExhibits', payload: data.data.data });
+    dispatch({type: 'setExhibits', payload: data.data.data});
   };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <CustomHeader showBackButton={false} />
       <ScrollView
         style={styles.container}
         bounces={false}
         showsVerticalScrollIndicator={false}>
         {/* HEADER */}
-        <View style={{ height: 333 }}>
+        <View style={{height: 333}}>
           <Image
             source={images.main_background_houses}
             style={{
@@ -126,14 +129,14 @@ const Main = () => {
             </View>
           </View>
         </View>
-        <Animated.View style={{ transform: [{ translateY: animatedText }] }}>
+        <Animated.View style={{transform: [{translateY: animatedText}]}}>
           <River_icon />
         </Animated.View>
         {/* QR & MAP */}
         <View style={styles.header_buttons_container}>
           <View style={styles.header_button_wrapper}>
             <Map_icon />
-            <Button text="Карта музея" onPress={() => { }} />
+            <Button text="Карта музея" onPress={() => {}} />
           </View>
           <View style={styles.header_button_wrapper}>
             <QrCode_icon />
@@ -141,6 +144,10 @@ const Main = () => {
               text="Сканировать QR-код"
               onPress={() => {
                 navigation.navigate('Photo');
+                // TODO тест костыль
+                // navigation.navigate('Details', {
+                //   uuid: '07021b86-2a36-4465-bf1f-d20bfb355c1b',
+                // });
               }}
             />
           </View>
@@ -163,7 +170,7 @@ const Main = () => {
               navigation.navigate('About');
             }}
           />
-          <Animated.View style={{ transform: [{ rotateZ: animateRotation }] }}>
+          <Animated.View style={{transform: [{rotateZ: animateRotation}]}}>
             <Home_Exposition_icon
               onPress={() => {
                 navigation.navigate('Exposition');
@@ -177,15 +184,17 @@ const Main = () => {
             <Image
               style={styles.img}
               source={require('../../../assets/images/qwiz.png')}
-
             />
           </TouchableWithoutFeedback>
 
-          {//       <Home_Park_icon onPress={() => { }} />
+          {
+            //       <Home_Park_icon onPress={() => { }} />
           }
         </Animated.View>
         {/* VIDEO */}
-        <TouchableWithoutFeedback style={styles.videoContainer} onPress={handlePlayPause}>
+        <TouchableWithoutFeedback
+          style={styles.videoContainer}
+          onPress={handlePlayPause}>
           <Video
             ref={videoRef}
             source={require('../../../assets/video/Rolik.mp4')}
@@ -198,11 +207,13 @@ const Main = () => {
             disableFullscreen={true}
             poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
           />
-          {!isPlaying && <View style={styles.controls}>
-            <TouchableOpacity style={styles.controlButton}>
-              <Play_btn />
-            </TouchableOpacity>
-          </View>}
+          {!isPlaying && (
+            <View style={styles.controls}>
+              <TouchableOpacity style={styles.controlButton}>
+                <Play_btn />
+              </TouchableOpacity>
+            </View>
+          )}
         </TouchableWithoutFeedback>
       </ScrollView>
     </SafeAreaView>
@@ -274,7 +285,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignSelf: 'center',
     marginBottom: 60,
-    transform: [{ translateY: -15 }],
+    transform: [{translateY: -15}],
   },
   videoContainer: {
     position: 'relative',
