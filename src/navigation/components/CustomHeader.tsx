@@ -39,8 +39,6 @@ const CustomHeader = ({
     return navigationHook.navigate('Main');
   };
 
-  console.log('!!!!!!!!')
-  console.log(title)
 
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: colors.white,
-    height: Platform.OS === 'ios' ? 44 : 50, // Высота заголовка
+    height: Platform.OS === 'ios' ? 44 : 30, // Высота заголовка
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     letterSpacing: 2,
-    paddingTop: 10,
+    paddingTop: 0,
     fontFamily: 'OzHandicraftCyrillicBT',
   },
   arrow: {

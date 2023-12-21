@@ -24,7 +24,7 @@ interface ExHibitProps {
   description: string;
 }
 
-const River = ({props}) => {
+const River = props => {
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
@@ -63,6 +63,7 @@ const River = ({props}) => {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
+        <Text style={styles.title}>Экспозиция «Мир священной реки Тром-Аган»</Text>
           {/* SLIDER */}
           <View style={styles.slider}>
             <ScrollView
@@ -113,7 +114,7 @@ const River = ({props}) => {
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <AudioPlayer
                 audio={
-                  'https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav'
+                  ['https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav']
                 }
               />
             </View>
@@ -211,9 +212,20 @@ const River = ({props}) => {
 export default River;
 
 const styles = StyleSheet.create({
+  title: {
+    paddingBottom:20,
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 55,
     backgroundColor: colors.white,
   },
   scroll: {
@@ -258,11 +270,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dotsContainer: {
-    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{translateX: 300 / 2}],
     flexDirection: 'row',
     gap: 4,
   },

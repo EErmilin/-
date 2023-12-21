@@ -57,9 +57,10 @@ const AboutPage = () => {
 
   return (
     <>
-      <CustomHeader title="История музея" />
       <SafeAreaView style={styles.container}>
+        
         <ScrollView contentContainerStyle={styles.scroll}>
+        <Text style={styles.title}>История</Text>
           { /*       
           <View style={styles.slider}>
             <ScrollView
@@ -113,7 +114,7 @@ const AboutPage = () => {
 
           {/* INFO */}
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <AudioPlayer audio={"https://museum.mobility.tw1.ru/assets/3541dd36-8d98-468e-8603-158ebcf130a2.mp3"} />
+              <AudioPlayer audio={["https://museum.mobility.tw1.ru/assets/3541dd36-8d98-468e-8603-158ebcf130a2.mp3"]} />
             </View>
           <View style={styles.infoContainer}>
             <Text style={styles.infoText}>
@@ -132,9 +133,21 @@ const AboutPage = () => {
 export default AboutPage;
 
 const styles = StyleSheet.create({
+  title: {
+    paddingBottom:10,
+    maxWidth:300,
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
   container: {
     flex: 1,
-    paddingTop:0,
+    paddingTop:50,
     backgroundColor: colors.white,
   },
   scroll: {

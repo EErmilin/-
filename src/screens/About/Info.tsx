@@ -61,6 +61,7 @@ const Info = () => {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
+        <Text style={styles.title}>Для посетитилей</Text>
           { /*       
           <View style={styles.slider}>
             <ScrollView
@@ -139,6 +140,16 @@ rusmuseum1988@yandex.ru`}
 export default Info;
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
   container: {
     flex: 1,
     paddingTop: 60,

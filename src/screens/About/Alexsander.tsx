@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -7,12 +7,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {images} from '../../../assets/images/images';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {colors} from '../../../assets/colors';
+import { images } from '../../../assets/images/images';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../../assets/colors';
 import CustomHeader from '../../navigation/components/CustomHeader';
-import AudioPlayer from '../../components/Audio';
-import {LinkComponent} from '../../components/LinkComponent';
+import { LinkComponent } from '../../components/LinkComponent';
+import MusicPlayer from '../../components/Audio';
 
 interface ExHibitProps {
   image: string;
@@ -31,7 +31,7 @@ const Alexsander = props => {
     } else {
       setActive(prevState => prevState + 1);
       setLayoutX(prev => prev + 320);
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
       console.log(layoutX);
     }
   };
@@ -46,20 +46,21 @@ const Alexsander = props => {
       setLayoutX(prev => prev - 320);
       console.log(layoutX);
 
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
     }
   };
 
-  const onLayoutEvent = (event: {nativeEvent: {layout: {x: number}}}) => {
-    const {x} = event.nativeEvent.layout;
+  const onLayoutEvent = (event: { nativeEvent: { layout: { x: number } } }) => {
+    const { x } = event.nativeEvent.layout;
     setLayoutX(x / images.imageSlider.length);
   };
 
   return (
     <>
-      <CustomHeader customTitle="История музея" />
       <SafeAreaView style={styles.container}>
+
         <ScrollView contentContainerStyle={styles.scroll}>
+        <Text style={styles.title}>Александр Павлович Ядрошников</Text>
           {/*       
           <View style={styles.slider}>
             <ScrollView
@@ -120,10 +121,14 @@ const Alexsander = props => {
               onLayout={onLayoutEvent}
             />
             <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <AudioPlayer
+              style={{
+                marginTop: 20,
+                alignSelf: 'stretch',
+                width: '100%'
+              }}>
+              <MusicPlayer
                 audio={
-                  'https://museum.mobility.tw1.ru/assets/e7dfd520-c25a-4731-a3bb-ba570d7aa55d.mp3'
+                  ['https://museum.mobility.tw1.ru/assets/e7dfd520-c25a-4731-a3bb-ba570d7aa55d.mp3']
                 }
               />
             </View>
@@ -156,7 +161,7 @@ const Alexsander = props => {
               <LinkComponent
                 text="священная голова медведя."
                 screen="Details"
-                params={{uuid: '0b869af2-c5a2-4c3e-8203-c371c19072fc'}}
+                params={{ uuid: '0b869af2-c5a2-4c3e-8203-c371c19072fc' }}
               />
               Музей открылся для гостей в 1988 году и с первых дней
               существования в стал популярным. Первым советчиком и помощником
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 0,
+    paddingTop: 55,
     backgroundColor: colors.white,
   },
   scroll: {
@@ -229,7 +234,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,7 +248,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -253,7 +258,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{translateX: 300 / 2}],
+    transform: [{ translateX: 300 / 2 }],
     flexDirection: 'row',
     gap: 4,
   },
@@ -294,8 +299,13 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   title: {
-    fontSize: 20,
-    color: 'black',
-    marginBottom: 20,
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
   },
 });

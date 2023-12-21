@@ -68,24 +68,24 @@ const Quiz = (props) => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setanswerArray([])
     setCouter(0)
-  },[props])
+  }, [props])
 
-  const next = () =>{
-    if(!(counter+1 === quizArray.length)){
+  const next = () => {
+    if (!(counter + 1 === quizArray.length)) {
       setanswerArray([])
-      setCouter(counter+1)
-    } else{
+      setCouter(counter + 1)
+    } else {
       setanswerArray([])
       setCouter(0)
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setcarrentQuestion(quizArray[counter])
-  },[counter])
+  }, [counter])
 
 
 
@@ -94,7 +94,7 @@ const Quiz = (props) => {
       <CustomHeader title="Викторина о музее" />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
-
+        <Text style={styles.title}>Викторина о музее</Text>
           {/* INFO */}
           <View style={styles.infoContainer}>
             <Text style={styles.infoText}>
@@ -109,7 +109,9 @@ const Quiz = (props) => {
               <Text style={styles.btnText}>{answer.value}</Text>
             </TouchableOpacity>)}
           </View>
-        { answerArray.find((item)=>!!item.isCorrect) && <TouchableOpacity style={styles.next} onPress={next}><Text>{counter+1 === quizArray.length ? 'Спасибо за участие в векторине :) \n Нажмите что бы начать сначала' : 'К следующему вопросу'}</Text></TouchableOpacity>}
+          {answerArray.find((item) => !!item.isCorrect) &&
+            <TouchableOpacity style={styles.next} onPress={next}><Text style={styles.nextText}>{counter + 1 === quizArray.length ? 'Спасибо за участие в векторине :) \n Нажмите что бы начать сначала' : 'К следующему вопросу'}</Text>
+            </TouchableOpacity>}
         </ScrollView>
       </SafeAreaView>
     </>
@@ -119,9 +121,19 @@ const Quiz = (props) => {
 export default Quiz;
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 30,
     backgroundColor: colors.white,
   },
   scroll: {
@@ -170,7 +182,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   next: {
-marginTop:25,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: colors.blue_light,
+    marginTop: 25,
+    padding:5,
+    alignItems: 'center',
+    width: "100%",
+
+  },
+
+  nextText:{
+    color:colors.blue_light,
+    fontSize: 18,
   }
 
 });

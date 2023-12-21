@@ -24,10 +24,10 @@ import MusicPlayer from '../../components/Audio';
 import ImagesModal from './components/ImagesModal/ImagesModal';
 import {useNavigation} from '@react-navigation/native';
 
-const ExHibit = ({route}) => {
+const ExHibit = props => {
   const {state} = useStore();
   const navigation = useNavigation();
-  const current = state?.exhibits?.find(item => item.id == route.params.uuid);
+  const current = state?.exhibits?.find(item => item.id == props.route.params.uuid);
   const imgArray = current.images?.map(img =>
     img.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
@@ -67,13 +67,15 @@ const ExHibit = ({route}) => {
       color: 'gray',
     },
   };
-
-  if (!current) return;
+console.log('!!!!!!!!!!!!')
+console.log(current)
+  if (!current) return<></>;
   return (
     <>
       <CustomHeader customTitle={current.name} />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
+        <Text style={styles.title}>{current.name}</Text>
           {/* SLIDER */}
           {imgArray && imgArray.length && imgArray[0] ? (
             <View style={styles.slider}>
@@ -168,6 +170,17 @@ const ExHibit = ({route}) => {
 export default ExHibit;
 
 const styles = StyleSheet.create({
+  title: {
+    paddingBottom:15,
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#2B2B2B',
+    width: '100%',
+    textAlign: 'center',
+    letterSpacing: 2,
+    paddingTop: 0,
+    fontFamily: 'OzHandicraftCyrillicBT',
+  },
   left: {
     width: 30,
     height: 30,
@@ -201,7 +214,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 20,
     backgroundColor: colors.white,
   },
   dotsContainer: {

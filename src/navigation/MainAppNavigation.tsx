@@ -1,30 +1,17 @@
 import React, {useEffect} from 'react';
-
 // import {NavigationContainer} from '@react-navigation/native';
-
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-
 import TopDrawerMenu from './components/TopDrawerMenu';
 import {TabParamList, TMainAppPage} from './types/TabTypes';
-
 import CustomHeader from './components/CustomHeader';
-
 // import Main from '../screens/Main/Main';
 import About from '../screens/About/About';
-import Fund from '../screens/Fund/Fund';
-import Exposition from '../screens/Exposition/Exposition';
-import Park from '../screens/Park/Park';
-import TourismFeature from '../screens/TourismFeature/TourismFeature';
-
 import MenuMain_icon from '../../assets/icons/MenuMain_icon';
 import MenuAbout_icon from '../../assets/icons/MenuAbout_icon';
-import MenuFund_icon from '../../assets/icons/MenuFund_icon';
 import MenuExposition_icon from '../../assets/icons/MenuExposition_icon';
-import MenuPark_icon from '../../assets/icons/MenuPark_icon';
-import MenuTourismFeature_icon from '../../assets/icons/MenuTourismFeature_icon';
 import SplashScreenNavigation from './SplashScreenNavigation';
 import PhotoAppNavigation from './PhotoAppNavigation';
 import CustomTabBar from '../../assets/icons/CustomTabBar';
@@ -35,7 +22,6 @@ import AboutPage from '../screens/About/AboutPage';
 import River from '../screens/About/River';
 import Alexsander from '../screens/About/Alexsander';
 import Info from '../screens/About/Info';
-import {useNavigation, useNavigationState} from '@react-navigation/native';
 import TrackPlayer from 'react-native-track-player';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -157,7 +143,7 @@ const MainAppNavigation = () => {
                 page.name !== 'Main' &&
                 page.name !== 'Details' &&
                 page.name !== 'Photo' && (
-                  <CustomHeader navigation={navigation} title={page.title} />
+                  <CustomHeader navigation={navigation} />
                 ),
               tabBarButton: () => null,
             }}

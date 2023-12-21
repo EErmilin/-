@@ -1,11 +1,11 @@
 import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
 //Main
 export type TMainAppPage = {
   name: keyof TabParamList;
   title: string;
   icon: React.ReactNode;
-  screen: React.ComponentType;
-  customTitle: string;
+  screen: React.ComponentType ;
 };
 
 //splash & home Stack types
@@ -35,6 +35,9 @@ export type TabParamList = {
   Info:undefined;
   Alexsander:undefined;
   AboutPage: undefined;
+  PhotoAppNavigation: undefined;
+  ExHibit: undefined;
+  History: undefined;
 };
 
 
