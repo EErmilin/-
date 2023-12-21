@@ -72,7 +72,6 @@ console.log(current)
   if (!current) return<></>;
   return (
     <>
-      <CustomHeader customTitle={current.name} />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.title}>{current.name}</Text>
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 50,
     backgroundColor: colors.white,
   },
   dotsContainer: {

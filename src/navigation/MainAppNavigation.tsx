@@ -141,7 +141,6 @@ const MainAppNavigation = () => {
               // eslint-disable-next-line react/no-unstable-nested-components
               header: ({navigation}) =>
                 page.name !== 'Main' &&
-                page.name !== 'Details' &&
                 page.name !== 'Photo' && (
                   <CustomHeader navigation={navigation} />
                 ),

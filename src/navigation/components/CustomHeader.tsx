@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: colors.white,
-    height: Platform.OS === 'ios' ? 44 : 30, // Высота заголовка
+    height: Platform.OS === 'ios' ? 44 : 50, // Высота заголовка
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',

@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   header_button_wrapper: {
+    paddingBottom: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
