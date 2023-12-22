@@ -36,6 +36,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { fetchItems } from '../../api/directusService';
 import { useStore } from '../../../App';
 import Play_btn from '../../../assets/icons/Play_btn';
+import VideoPlayer from 'react-native-video-controls';
 
 const Main = () => {
   const { state, dispatch }: any = useStore();
@@ -177,6 +178,9 @@ const Main = () => {
               }}
             />
           </Animated.View>
+          {
+            <Home_Park_icon onPress={() => navigation.navigate('Park')} />
+          }
           <TouchableWithoutFeedback
             onPress={() => {
               navigation.navigate('Quiz');
@@ -187,15 +191,11 @@ const Main = () => {
             />
           </TouchableWithoutFeedback>
 
-          {
-            //       <Home_Park_icon onPress={() => { }} />
-          }
+
         </Animated.View>
         {/* VIDEO */}
-        <TouchableWithoutFeedback
-          style={styles.videoContainer}
-          onPress={handlePlayPause}>
-          <Video
+        <View style={styles.videoContainer}>
+          <VideoPlayer
             ref={videoRef}
             source={require('../../../assets/video/Rolik.mp4')}
             style={styles.backgroundVideo}
@@ -204,18 +204,13 @@ const Main = () => {
             repeat={false}
             progressUpdateInterval={250.0}
             resizeMode="contain"
-            disableFullscreen={true}
+            //disableFullscreen={true}
             poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
           />
-          {!isPlaying && (
-            <View style={styles.controls}>
-              <TouchableOpacity style={styles.controlButton}>
-                <Play_btn />
-              </TouchableOpacity>
-            </View>
-          )}
-        </TouchableWithoutFeedback>
+        </View>
+
       </ScrollView>
+
     </SafeAreaView>
   );
 };
@@ -290,18 +285,18 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -15 }],
   },
   videoContainer: {
+    flex: 1,
     position: 'relative',
     height: 300,
-    flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
   },
   backgroundVideo: {
-    flex: 1,
     backgroundColor: '#000',
-    width: '95%',
-
+    margin: 10,
+    marginTop: 0,
     height: 250,
     marginBottom: 60,
   },

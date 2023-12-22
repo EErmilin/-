@@ -28,12 +28,15 @@ const ExHibit = props => {
   const {state} = useStore();
   const navigation = useNavigation();
   const current = state?.exhibits?.find(item => item.id == props.route.params.uuid);
-  const imgArray = current.images?.map(img =>
+  console.log('!!!!!!!!!!!')
+  console.log(current)
+  console.log(props)
+  const imgArray = current?.images?.map(img =>
     img.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
       : null,
   );
-  const audios = current.audios?.map(audio =>
+  const audios = current?.audios?.map(audio =>
     audio.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}`
       : null,
@@ -67,8 +70,7 @@ const ExHibit = props => {
       color: 'gray',
     },
   };
-console.log('!!!!!!!!!!!!')
-console.log(current)
+
   if (!current) return<></>;
   return (
     <>

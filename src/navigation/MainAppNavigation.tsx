@@ -23,7 +23,8 @@ import River from '../screens/About/River';
 import Alexsander from '../screens/About/Alexsander';
 import Info from '../screens/About/Info';
 import TrackPlayer from 'react-native-track-player';
-
+import MenuPark_icon from '../../assets/icons/MenuPark_icon';
+import Park from '../screens/Park/Park';
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export const PAGES: Array<TMainAppPage> = [
@@ -51,12 +52,12 @@ export const PAGES: Array<TMainAppPage> = [
     icon: <MenuExposition_icon />,
     screen: River, // Exposition,
   },
-  // {
-  //   name: 'Park',
-  //   title: 'Музейный этнографический парк «Земля предков»',
-  //   icon: <MenuPark_icon />,
-  //   screen: Park,
-  // },
+   {
+     name: 'Park',
+     title: 'Музейный этнографический парк «Земля предков»',
+     icon: <MenuPark_icon />,
+     screen: Park,
+   },
 
   // {
   //   name: 'TourismFeature',
