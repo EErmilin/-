@@ -6,6 +6,8 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  useWindowDimensions,
+  Linking,
 } from 'react-native';
 import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,6 +15,16 @@ import { colors } from '../../../assets/colors';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import { LinkComponent } from '../../components/LinkComponent';
 import MusicPlayer from '../../components/Audio';
+import Arrow_right from '../../../assets/icons/Arrow_right';
+import ExhibitTitle from '../../navigation/components/ExhibitTitle';
+import {useStore} from '../../../App';
+import ImageView from 'react-native-image-viewing';
+import HTML from 'react-native-render-html';
+import Left_arrow from '../../../assets/icons/Left_arrow';
+import {useEffect} from 'react';
+
+import {useNavigation} from '@react-navigation/native';
+
 
 interface ExHibitProps {
   image: string;
@@ -20,47 +32,53 @@ interface ExHibitProps {
   description: string;
 }
 
-const Alexsander = props => {
+
+const Alexsander = () => {
+  const {state}: any = useStore();
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
-  //next slider
+  const [visible, setIsVisible] = useState(-1);
+  const {width} = useWindowDimensions();
+  const navigation = useNavigation();
+  const info = state?.content?.find(item => item.key == "омузее_ЯдрошниковАП");
+  const imgArray = info?.images?.map(img =>
+    img.directus_files_id
+      ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
+      : null,
+  );
   const nextSlider = () => {
-    if (active === images.imageSlider.length - 1) {
-      return;
-    } else {
-      setActive(prevState => prevState + 1);
-      setLayoutX(prev => prev + 320);
-      refImage?.current?.scrollTo({ x: layoutX, animated: true });
-      console.log(layoutX);
-    }
+    if (active === imgArray.length - 1) return;
+    setActive(active + 1);
+    setLayoutX(layoutX + 320);
   };
-
-  //prev slider
 
   const prevSlider = () => {
-    if (active === 0) {
-      setLayoutX(0);
-    } else {
-      setActive(prevState => prevState - 1);
-      setLayoutX(prev => prev - 320);
-      console.log(layoutX);
-
-      refImage?.current?.scrollTo({ x: layoutX, animated: true });
-    }
+    if (active === 0) return;
+    setActive(active - 1);
+    setLayoutX(layoutX - 320);
+    console.log(layoutX);
   };
 
-  const onLayoutEvent = (event: { nativeEvent: { layout: { x: number } } }) => {
-    const { x } = event.nativeEvent.layout;
-    setLayoutX(x / images.imageSlider.length);
+  useEffect(() => {
+    refImage?.current?.scrollTo({x: layoutX, animated: true});
+  }, [layoutX]);
+
+
+  const tagsStyles = {
+    body: {
+      whiteSpace: 'normal',
+      color: 'gray',
+    },
   };
+
 
   return (
     <>
       <SafeAreaView style={styles.container}>
 
         <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.title}>Александр Павлович Ядрошников</Text>
+        <Text style={styles.title} onPress={()=>console.log(state)}>Александр Павлович Ядрошников</Text>
           {/*       
           <View style={styles.slider}>
             <ScrollView
@@ -114,12 +132,57 @@ const Alexsander = props => {
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <Image
-              source={require('../../../assets/images/alexander.jpg')}
-              style={styles.imageStyle}
-              resizeMode="cover"
-              onLayout={onLayoutEvent}
-            />
+          {imgArray && imgArray.length && imgArray[0] ? (
+            <View style={styles.slider}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ref={refImage}>
+                {imgArray.map((image, i) => {
+                  return (
+                      <Image
+                        source={{uri:image}}
+                        style={styles.imageStyle}
+                        resizeMode="contain"
+                        key={i}
+                      />
+                  );
+                })}
+                <ImageView
+                  images={imgArray.map(item => {
+                    return {uri: item};
+                  })}
+                  imageIndex={visible}
+                  visible={visible > -1 ? true : false}
+                  onRequestClose={() => setIsVisible(-1)}
+                />
+              </ScrollView>
+              <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
+                <Arrow_right />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.arrow, styles.left]}
+                onPress={prevSlider}>
+                <Left_arrow />
+              </TouchableOpacity>
+              <View style={styles.dotsContainer}>
+                {imgArray.map((_, index) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[
+                        styles.dots,
+                        {
+                          backgroundColor:
+                            active === index ? colors.blue : colors.yellow,
+                        },
+                      ]}
+                    />
+                  );
+                })}
+              </View>
+            </View>
+          ) : null}
             <View
               style={{
                 marginTop: 20,
@@ -132,67 +195,29 @@ const Alexsander = props => {
                 }
               />
             </View>
-            <Text style={styles.infoText}>
-              Александр Павлович Ядрошников родился в 1940 г. в г. НолИнске
-              Кировской области. С детства мечтал связать свою жизнь с лесом,
-              увлекался охотой, рыбалкой, рисованием. В 1967 году после
-              окончания Иркутского заготовительного техникума был направлен в
-              национальный поселок РусскинскИе Сургутского района. Более 20 лет
-              работал охотоведом в промохотхозяйстве, много времени проводил на
-              стойбищах тром-агАнских ханты. Был одним из первых организаторов
-              Слёта рыбаков, охотников и оленеводов. За четверть века проникся
-              глубоким уважением к коренным жителям, изучил традиции их культуры
-              и исследовал законы таежной жизни. Часто ханты делились
-              опасениями, появившимися в связи с промышленным освоением края,
-              сетовали на экологическую проблему, на утрату своего культурного
-              наследия. Стремление маленького народа к сохранению культурных
-              традиций и желание показать красоту югорского края подвигли
-              Александра Павловича на создание музея. Идейным вдохновителем стал
-              друг – Николай Липатов, который помог с первым музейным помещением
-              – маленьким вагончиком во дворе семьи Ядрошниковых. В основу
-              первой <LinkComponent screen="Exposition" text="экспозиции" />{' '}
-              легло увлечение Александра Павловича таксидермией – изготовлением
-              муляжей животных. Большой охотничий опыт, природное чутьё
-              композиции и талант мастера помогли найти правильные способы
-              творческого воплощения. Уникальные этнографические предметы были
-              собраны в поездках на стойбища тром-аганских ханты. Ханты понимали
-              значение музея и поэтому приносили мастеру редкие трофеи и
-              предметы. Одним из первых даров от коренных жителей стала{' '}
-              <LinkComponent
-                text="священная голова медведя."
-                screen="Details"
-                params={{ uuid: '0b869af2-c5a2-4c3e-8203-c371c19072fc' }}
-              />
-              Музей открылся для гостей в 1988 году и с первых дней
-              существования в стал популярным. Первым советчиком и помощником
-              мастера и первым экскурсоводом музея стала жена Людмила
-              Алексеевна. Супруги со временем овладели всеми видами музейной
-              работы, выезжали на выставки. О музее пошла молва за пределами
-              Русскинской. Стали помогать местные власти, поддерживали
-              музейщики. В 1993 году выделили помещение, а на территории
-              музейного парка Александр Павлович начал создавать комплекс
-              хантыйской традиционной архитектуры. Музей стал цельным
-              организмом, полным энергии, сил и планов. 12 сентября 2016 года
-              распахнуло двери просторное здание музея с новой{' '}
-              <LinkComponent
-                screen="Exposition"
-                text="экспозицией «Мир священной реки Тром-Аган»"
-              />
-              . В далекие 1980-е годы разве мог подумать Мастер о том, что его
-              детище станет известным далеко за пределами России, что станет для
-              многотысячных гостей открытием природы и культуры югорского края.
-              За многолетний труд и популяризацию культуры Югры Александр
-              Павлович Ядрошников удостоен почетных званий «Заслуженный деятель
-              культуры Ханты-Мансийского автономного округа» и «Почетный
-              гражданин Сургутского района». В сентябре 2008 г. постановлением
-              Главы Сургутского района музею было присвоено имя основателя. В
-              ноябре 2014г. Александр Павлович за вклад в отечественную культуру
-              был награжден Почетной грамотой Президента России В.В. Путина.
-              Жизнь Александра Павловича Ядрошникова – образец большой
-              созидательной деятельности, его творчество – песня югорской земле.
-              Верность родному краю, северной природе и своему музею несет он
-              через годы.
-            </Text>
+            <HTML
+              contentWidth={width}
+              source={{html: info.description}}
+              tagsStyles={tagsStyles}
+              renderersProps={{
+                a: {
+                  onPress(event, url, htmlAttribs, target) {
+                    if (url.includes('exhibits')) {
+                      const parts = url.split('/');
+                      var uuid = parts[parts.length - 1];
+                      navigation.navigate('Details', {uuid: uuid});
+                    } else {
+                      Linking.canOpenURL(url).then(supported => {
+                        if (supported) {
+                          Linking.openURL(url);
+                        }
+                      });
+                    }
+                  },
+                },
+              }}
+            />
+
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -203,6 +228,12 @@ const Alexsander = props => {
 export default Alexsander;
 
 const styles = StyleSheet.create({
+
+  imageStyle: {
+    width: 320,
+    height: 170,
+    marginRight: 13,
+  },
   link: {
     color: 'blue',
     textDecorationLine: 'underline',
@@ -221,11 +252,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
   },
-  imageStyle: {
-    width: '100%',
-    height: 200,
-    marginRight: 20,
-  },
+
   arrow: {
     width: 30,
     height: 30,
@@ -238,6 +265,17 @@ const styles = StyleSheet.create({
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  dots: {
+    width: 10,
+    aspectRatio: 1,
+    backgroundColor: colors.blue,
+    display: 'flex',
+    // position: 'absolute',
+    // bottom: -10,
+    // left: 300 / 2,
+    // transform: [{translateY: -10 / 2}],
+    borderRadius: 5,
   },
 
   left: {
@@ -254,23 +292,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dotsContainer: {
-    width: 100,
-    position: 'absolute',
+    width: '100%',
+ //   position: 'absolute',
     bottom: -20,
-    left: 'auto',
-    transform: [{ translateX: 300 / 2 }],
+    flex: 1,
+    justifyContent: 'center',
+   alignItems:'center',
     flexDirection: 'row',
     gap: 4,
-  },
-  dots: {
-    width: 10,
-    aspectRatio: 1,
-    backgroundColor: colors.blue,
-    // position: 'absolute',
-    // bottom: -10,
-    // left: 300 / 2,
-    // transform: [{translateY: -10 / 2}],
-    borderRadius: 5,
   },
   voiceContainer: {
     flexDirection: 'row',

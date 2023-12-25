@@ -18,7 +18,8 @@ export const useStore = () => useContext(StoreContext);
 // Define the initial state
 const initialState = {
   exhibits: null,
-  exhibitUuid: null
+  exhibitUuid: null,
+  content: null
 };
 
 // Define the reducer function
@@ -28,6 +29,8 @@ const reducer = (state: any, action: any) => {
       return { ...state, exhibits: action.payload };
     case 'setUuid':
       return { ...state, exhibitUuid: action.payload };
+    case 'setContent':
+      return { ...state, content: action.payload };
     default:
       return state;
   }

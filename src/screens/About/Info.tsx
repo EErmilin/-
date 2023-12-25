@@ -6,15 +6,13 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
-import Arrow_right from '../../../assets/icons/Arrow_right';
-import Play_btn from '../../../assets/icons/Play_btn';
-import WaveForm from 'react-native-audiowaveform';
-import CustomHeader from '../../navigation/components/CustomHeader';
-import Left_arrow from '../../../assets/icons/Left_arrow';
+import HTML from 'react-native-render-html';
+import { useStore } from '../../../App';
 
 interface ExHibitProps {
   image: string;
@@ -26,6 +24,9 @@ const Info = () => {
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
+  const {state}: any = useStore();
+  const {width} = useWindowDimensions();
+  const info = state?.content?.find(item => item.key == "омузее_дляпосетителей");
   //next slider
   const nextSlider = () => {
     if (active === images.imageSlider.length - 1) {
@@ -38,7 +39,12 @@ const Info = () => {
     }
   };
 
-  //prev slider
+  const tagsStyles = {
+    body: {
+      whiteSpace: 'normal',
+      color: 'gray',
+    },
+  };
 
   const prevSlider = () => {
     if (active === 0) {
@@ -115,21 +121,28 @@ const Info = () => {
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
-            {`РЕЖИМ РАБОТЫ
-
-Ср-вс - 10:00-17:00
-Пн-вт - выходной
-
-Адрес
-628446, ХМАО–Югра, Сургутский р-н, с.п. Русскинская, ул. Русскиных, д.28
-
-Телефон
-+7 (3462) 73-79-49, +7 (3462) 73-79-36
-
-E-mail
-rusmuseum1988@yandex.ru`}
-            </Text>
+            <HTML
+              contentWidth={width}
+              source={{html: info.description}}
+              tagsStyles={tagsStyles}
+              renderersProps={{
+                a: {
+                  onPress(event, url, htmlAttribs, target) {
+                    if (url.includes('exhibits')) {
+                      const parts = url.split('/');
+                      var uuid = parts[parts.length - 1];
+                      navigation.navigate('Details', {uuid: uuid});
+                    } else {
+                      Linking.canOpenURL(url).then(supported => {
+                        if (supported) {
+                          Linking.openURL(url);
+                        }
+                      });
+                    }
+                  },
+                },
+              }}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>

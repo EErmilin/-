@@ -6,7 +6,7 @@ const baseURL = 'https://museum.mobility.tw1.ru';
 export const fetchItems = async (collection: string) => {
   try {
     console.log("START RESPONSE")
-    const response = await axios.get(`https://museum.mobility.tw1.ru/items/exhibits?fields=*,images.directus_files_id.filename_disk,audios.directus_files_id.filename_disk`);
+    const response = await axios.get(`https://museum.mobility.tw1.ru/items/${collection}`);
     console.log("response", response)
     return response;
   } catch (error) {

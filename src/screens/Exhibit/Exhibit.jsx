@@ -28,9 +28,6 @@ const ExHibit = props => {
   const {state} = useStore();
   const navigation = useNavigation();
   const current = state?.exhibits?.find(item => item.id == props.route.params.uuid);
-  console.log('!!!!!!!!!!!')
-  console.log(current)
-  console.log(props)
   const imgArray = current?.images?.map(img =>
     img.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`

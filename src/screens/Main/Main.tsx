@@ -91,7 +91,9 @@ const Main = () => {
   }, [animateBlocks, animateRotation]);
 
   const fetchData = async () => {
-    const data = await fetchItems('exhibits');
+    const content = await fetchItems('app_content?fields=*,images.directus_files_id.filename_disk,audios.directus_files_id.filename_disk')
+    const data = await fetchItems('exhibits?fields=*,images.directus_files_id.filename_disk,audios.directus_files_id.filename_disk');
+    dispatch({ type: 'setContent', payload: content.data.data });
     dispatch({ type: 'setExhibits', payload: data.data.data });
   };
 
