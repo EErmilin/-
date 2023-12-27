@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,13 +9,13 @@ import {
   useWindowDimensions,
   Linking
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {colors} from '../../../assets/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
 import HTML from 'react-native-render-html';
 import Left_arrow from '../../../assets/icons/Left_arrow';
 import AudioPlayer from '../../components/Audio';
-import {LinkComponent} from '../../components/LinkComponent';
+import VideoPlayer from 'react-native-video-controls';
 import { useStore } from '../../../App';
 import { useNavigation } from '@react-navigation/native';
 
@@ -30,8 +30,8 @@ const River = props => {
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
-  const {state}: any = useStore();
-  const {width} = useWindowDimensions();
+  const { state }: any = useStore();
+  const { width } = useWindowDimensions();
   const info = state?.content?.find(item => item.key == "главная_экспозиция");
   const imgArray = info?.images?.map(img =>
     img.directus_files_id
@@ -44,8 +44,8 @@ const River = props => {
       return;
     } else {
       setActive(prevState => prevState + 1);
-      setLayoutX(prev => prev + 320);
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      setLayoutX(prev => prev + 336);
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
       console.log(layoutX);
     }
   };
@@ -63,15 +63,15 @@ const River = props => {
       setLayoutX(0);
     } else {
       setActive(prevState => prevState - 1);
-      setLayoutX(prev => prev - 320);
+      setLayoutX(prev => prev - 336);
       console.log(layoutX);
 
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
     }
   };
 
-  const onLayoutEvent = (event: {nativeEvent: {layout: {x: number}}}) => {
-    const {x} = event.nativeEvent.layout;
+  const onLayoutEvent = (event: { nativeEvent: { layout: { x: number } } }) => {
+    const { x } = event.nativeEvent.layout;
     setLayoutX(x / imgArray.length);
   };
 
@@ -79,7 +79,7 @@ const River = props => {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.title}>Экспозиция «Мир священной реки Тром-Аган»</Text>
+          <Text style={styles.title}>Экспозиция «Мир священной реки Тром-Аган»</Text>
           {/* SLIDER */}
           <View style={styles.slider}>
             <ScrollView
@@ -88,9 +88,19 @@ const River = props => {
               scrollEnabled={false}
               ref={refImage}>
               {imgArray.map((image, i) => {
+                if (image.includes('mp4')) {
+                  return <VideoPlayer
+                    style={styles.imageStyle}
+                    paused={true}
+                    resizeMode="cover"
+                    disableFullscreen={true}
+                    source={{ uri: image }}
+                    poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
+                  />
+                }
                 return (
                   <Image
-                    source={{uri: image}}
+                    source={{ uri: image }}
                     style={styles.imageStyle}
                     resizeMode="cover"
                     key={i}
@@ -127,7 +137,7 @@ const River = props => {
           {/* VOICE */}
           <View style={styles.voiceContainer}>
             <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <AudioPlayer
                 audio={
                   ['https://museum.mobility.tw1.ru/assets/a08a1071-5089-4d39-86be-3d9a9b9a962f.wav']
@@ -138,9 +148,9 @@ const River = props => {
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-          <HTML
+            <HTML
               contentWidth={width}
-              source={{html: info.description}}
+              source={{ html: info.description }}
               tagsStyles={tagsStyles}
               renderersProps={{
                 a: {
@@ -148,7 +158,7 @@ const River = props => {
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];
-                      navigation.navigate('Details', {uuid: uuid});
+                      navigation.navigate('Details', { uuid: uuid });
                     } else {
                       Linking.canOpenURL(url).then(supported => {
                         if (supported) {
@@ -171,7 +181,7 @@ export default River;
 
 const styles = StyleSheet.create({
   title: {
-    paddingBottom:20,
+    paddingBottom: 20,
     fontSize: 24,
     lineHeight: 30,
     color: '#2B2B2B',
@@ -196,9 +206,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageStyle: {
-    width: 300,
+    width: 320,
     height: 170,
-    marginRight: 20,
+    marginRight: 13,
+    marginLeft: 3,
   },
   arrow: {
     width: 30,
@@ -208,7 +219,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -222,7 +233,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',

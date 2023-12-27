@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -7,12 +7,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {images} from '../../../assets/images/images';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {colors} from '../../../assets/colors';
+import { images } from '../../../assets/images/images';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
 import Play_btn from '../../../assets/icons/Play_btn';
-
+import VideoPlayer from 'react-native-video-controls';
 import CustomHeader from '../../navigation/components/CustomHeader';
 import Left_arrow from '../../../assets/icons/Left_arrow';
 
@@ -32,8 +32,8 @@ const ExhibitSlider = () => {
       return;
     } else {
       setActive(prevState => prevState + 1);
-      setLayoutX(prev => prev + 320);
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      setLayoutX(prev => prev + 336);
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
       console.log(layoutX);
     }
   };
@@ -45,15 +45,15 @@ const ExhibitSlider = () => {
       setLayoutX(0);
     } else {
       setActive(prevState => prevState - 1);
-      setLayoutX(prev => prev - 320);
+      setLayoutX(prev => prev - 336);
       console.log(layoutX);
 
-      refImage?.current?.scrollTo({x: layoutX, animated: true});
+      refImage?.current?.scrollTo({ x: layoutX, animated: true });
     }
   };
 
-  const onLayoutEvent = (event: {nativeEvent: {layout: {x: number}}}) => {
-    const {x} = event.nativeEvent.layout;
+  const onLayoutEvent = (event: { nativeEvent: { layout: { x: number } } }) => {
+    const { x } = event.nativeEvent.layout;
     setLayoutX(x / images.imageSlider.length);
   };
 
@@ -70,6 +70,16 @@ const ExhibitSlider = () => {
               scrollEnabled={false}
               ref={refImage}>
               {images.imageSlider.map((image, i) => {
+                if (image.includes('mp4')) {
+                  return <VideoPlayer
+                    style={styles.imageStyle}
+                    paused={true}
+                    resizeMode="cover"
+                    disableFullscreen={true}
+                    source={{ uri: image }}
+                    poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
+                  />
+                }
                 return (
                   <Image
                     source={image.item}
@@ -172,9 +182,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageStyle: {
-    width: 300,
+    width: 320,
     height: 170,
-    marginRight: 20,
+    marginRight: 13,
+    marginLeft: 3,
   },
   arrow: {
     width: 30,
@@ -184,7 +195,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -30 / 2,
     top: 161 / 2,
-    transform: [{translateY: -30 / 2}],
+    transform: [{ translateY: -30 / 2 }],
     elevation: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -208,7 +219,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{translateX: 300 / 2}],
+    transform: [{ translateX: 300 / 2 }],
     flexDirection: 'row',
     gap: 4,
   },

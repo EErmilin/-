@@ -9,22 +9,17 @@ import {
   useWindowDimensions,
   Linking,
 } from 'react-native';
-import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
-import CustomHeader from '../../navigation/components/CustomHeader';
-import { LinkComponent } from '../../components/LinkComponent';
 import MusicPlayer from '../../components/Audio';
 import Arrow_right from '../../../assets/icons/Arrow_right';
-import ExhibitTitle from '../../navigation/components/ExhibitTitle';
-import {useStore} from '../../../App';
+import { useStore } from '../../../App';
 import ImageView from 'react-native-image-viewing';
 import HTML from 'react-native-render-html';
 import Left_arrow from '../../../assets/icons/Left_arrow';
-import {useEffect} from 'react';
-
-import {useNavigation} from '@react-navigation/native';
-
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import VideoPlayer from 'react-native-video-controls';
 
 interface ExHibitProps {
   image: string;
@@ -34,12 +29,12 @@ interface ExHibitProps {
 
 
 const Alexsander = () => {
-  const {state}: any = useStore();
+  const { state }: any = useStore();
   const refImage = useRef(null);
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
   const [visible, setIsVisible] = useState(-1);
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
   const info = state?.content?.find(item => item.key == "омузее_ЯдрошниковАП");
   const imgArray = info?.images?.map(img =>
@@ -50,18 +45,17 @@ const Alexsander = () => {
   const nextSlider = () => {
     if (active === imgArray.length - 1) return;
     setActive(active + 1);
-    setLayoutX(layoutX + 320);
+    setLayoutX(layoutX + 336);
   };
 
   const prevSlider = () => {
     if (active === 0) return;
     setActive(active - 1);
-    setLayoutX(layoutX - 320);
-    console.log(layoutX);
+    setLayoutX(layoutX - 336);
   };
 
   useEffect(() => {
-    refImage?.current?.scrollTo({x: layoutX, animated: true});
+    refImage?.current?.scrollTo({ x: layoutX, animated: true });
   }, [layoutX]);
 
 
@@ -78,111 +72,74 @@ const Alexsander = () => {
       <SafeAreaView style={styles.container}>
 
         <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.title} onPress={()=>console.log(state)}>Александр Павлович Ядрошников</Text>
-          {/*       
-          <View style={styles.slider}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEnabled={false}
-              ref={refImage}>
-              {images.imageSlider.map((image, i) => {
-                return (
-                  <Image
-                    source={image.item}
-                    style={styles.imageStyle}
-                    resizeMode="cover"
-                    key={i}
-                    onLayout={onLayoutEvent}
-                  />
-                );
-              })}
-            </ScrollView>
-            <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
-              <Arrow_right />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrow, styles.left]}
-              onPress={prevSlider}>
-              <Left_arrow />
-            </TouchableOpacity>
-            <View style={styles.dotsContainer}>
-              {images.imageSlider.map((_, index) => {
-                return (
-                  <View
-                    key={index}
-                    style={[
-                      styles.dots,
-                      {
-                        backgroundColor:
-                          active === index ? colors.blue : colors.yellow,
-                      },
-                    ]}
-                  />
-                );
-              })}
-            </View>
-            </View>  
-
-          <View style={styles.voiceContainer}>
-            <View style={styles.play}>
-              <Play_btn />
-            </View>
-          </View>*/}
+          <Text style={styles.title} onPress={() => console.log(imgArray)}>Александр Павлович Ядрошников</Text>
 
           {/* INFO */}
           <View style={styles.infoContainer}>
-          {imgArray && imgArray.length && imgArray[0] ? (
-            <View style={styles.slider}>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ref={refImage}>
-                {imgArray.map((image, i) => {
-                  return (
-                      <Image
-                        source={{uri:image}}
+            {imgArray && imgArray.length && imgArray[0] ? (
+              <View style={styles.slider}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  ref={refImage}>
+                  {imgArray.map((image, i) => {
+                    if (image.includes('mp4')) {
+                      return <VideoPlayer
                         style={styles.imageStyle}
-                        resizeMode="contain"
-                        key={i}
+                        paused={true}
+                        resizeMode="cover"
+                        disableFullscreen={true}
+                        source={{ uri: image }}
+                        poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
                       />
-                  );
-                })}
-                <ImageView
-                  images={imgArray.map(item => {
-                    return {uri: item};
+                    }
+                    return (
+                      <TouchableOpacity
+                        style={styles.imageStyle} onPress={() => setIsVisible(i)}>
+                        <Image
+                          source={{ uri: image }}
+                          style={styles.imageStyle}
+                          resizeMode="cover"
+                          key={i}
+                        />
+                      </TouchableOpacity>
+                    );
                   })}
-                  imageIndex={visible}
-                  visible={visible > -1 ? true : false}
-                  onRequestClose={() => setIsVisible(-1)}
-                />
-              </ScrollView>
-              <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
-                <Arrow_right />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.arrow, styles.left]}
-                onPress={prevSlider}>
-                <Left_arrow />
-              </TouchableOpacity>
-              <View style={styles.dotsContainer}>
-                {imgArray.map((_, index) => {
-                  return (
-                    <View
-                      key={index}
-                      style={[
-                        styles.dots,
-                        {
-                          backgroundColor:
-                            active === index ? colors.blue : colors.yellow,
-                        },
-                      ]}
-                    />
-                  );
-                })}
+                  <ImageView
+                    images={imgArray.map(item => {
+                      return { uri: item };
+                    })}
+                    imageIndex={visible}
+                    visible={visible > -1 ? true : false}
+                    onRequestClose={() => setIsVisible(-1)}
+                  />
+                </ScrollView>
+                <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
+                  <Arrow_right />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.arrow, styles.left]}
+                  onPress={prevSlider}>
+                  <Left_arrow />
+                </TouchableOpacity>
+                <View style={styles.dotsContainer}>
+                  {imgArray.map((_, index) => {
+                    return (
+                      <View
+                        key={index}
+                        style={[
+                          styles.dots,
+                          {
+                            backgroundColor:
+                              active === index ? colors.blue : colors.yellow,
+                          },
+                        ]}
+                      />
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-          ) : null}
+            ) : null}
             <View
               style={{
                 marginTop: 20,
@@ -197,7 +154,7 @@ const Alexsander = () => {
             </View>
             <HTML
               contentWidth={width}
-              source={{html: info.description}}
+              source={{ html: info.description }}
               tagsStyles={tagsStyles}
               renderersProps={{
                 a: {
@@ -205,7 +162,7 @@ const Alexsander = () => {
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];
-                      navigation.navigate('Details', {uuid: uuid});
+                      navigation.navigate('Details', { uuid: uuid });
                     } else {
                       Linking.canOpenURL(url).then(supported => {
                         if (supported) {
@@ -233,6 +190,7 @@ const styles = StyleSheet.create({
     width: 320,
     height: 170,
     marginRight: 13,
+    marginLeft: 3,
   },
   link: {
     color: 'blue',
@@ -293,11 +251,11 @@ const styles = StyleSheet.create({
   },
   dotsContainer: {
     width: '100%',
- //   position: 'absolute',
+    //   position: 'absolute',
     bottom: -20,
     flex: 1,
     justifyContent: 'center',
-   alignItems:'center',
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 4,
   },

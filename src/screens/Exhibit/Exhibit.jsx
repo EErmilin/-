@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,23 +9,21 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {colors} from '../../../assets/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../../assets/colors';
 import Arrow_right from '../../../assets/icons/Arrow_right';
-import ExhibitTitle from '../../navigation/components/ExhibitTitle';
-import CustomHeader from '../../navigation/components/CustomHeader';
-import {useStore} from '../../../App';
+import { useStore } from '../../../App';
 import ImageView from 'react-native-image-viewing';
 import HTML from 'react-native-render-html';
-import {useRef} from 'react';
+import { useRef } from 'react';
 import Left_arrow from '../../../assets/icons/Left_arrow';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import MusicPlayer from '../../components/Audio';
-import ImagesModal from './components/ImagesModal/ImagesModal';
-import {useNavigation} from '@react-navigation/native';
+import VideoPlayer from 'react-native-video-controls';
+import { useNavigation } from '@react-navigation/native';
 
 const ExHibit = props => {
-  const {state} = useStore();
+  const { state } = useStore();
   const navigation = useNavigation();
   const current = state?.exhibits?.find(item => item.id == props.route.params.uuid);
   const imgArray = current?.images?.map(img =>
@@ -38,7 +36,7 @@ const ExHibit = props => {
       ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}`
       : null,
   );
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [active, setActive] = useState(0);
   const [layoutX, setLayoutX] = useState(0);
   const [visible, setIsVisible] = useState(-1);
@@ -46,19 +44,19 @@ const ExHibit = props => {
   const nextSlider = () => {
     if (active === imgArray.length - 1) return;
     setActive(active + 1);
-    setLayoutX(layoutX + 320);
+    setLayoutX(layoutX + 336);
     console.log(layoutX);
   };
 
   const prevSlider = () => {
     if (active === 0) return;
     setActive(active - 1);
-    setLayoutX(layoutX - 320);
+    setLayoutX(layoutX - 336);
     console.log(layoutX);
   };
 
   useEffect(() => {
-    refImage?.current?.scrollTo({x: layoutX, animated: true});
+    refImage?.current?.scrollTo({ x: layoutX, animated: true });
   }, [layoutX]);
 
   const tagsStyles = {
@@ -68,12 +66,12 @@ const ExHibit = props => {
     },
   };
 
-  if (!current) return<></>;
+  if (!current) return <></>;
   return (
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.title}>{current.name}</Text>
+          <Text style={styles.title}>{current.name}</Text>
           {/* SLIDER */}
           {imgArray && imgArray.length && imgArray[0] ? (
             <View style={styles.slider}>
@@ -83,10 +81,20 @@ const ExHibit = props => {
                 scrollEnabled={false}
                 ref={refImage}>
                 {imgArray.map((image, i) => {
+                  if (image.includes('mp4')) {
+                    return <VideoPlayer
+                      style={styles.imageStyle}
+                      paused={true}
+                      resizeMode="cover"
+                      disableFullscreen={true}
+                      source={{ uri: image }}
+                      poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
+                    />
+                  }
                   return (
                     <TouchableOpacity onPress={() => setIsVisible(i)}>
                       <Image
-                        source={{uri: image}}
+                        source={{ uri: image }}
                         style={styles.imageStyle}
                         resizeMode="contain"
                         key={i}
@@ -96,7 +104,7 @@ const ExHibit = props => {
                 })}
                 <ImageView
                   images={imgArray.map(item => {
-                    return {uri: item};
+                    return { uri: item };
                   })}
                   imageIndex={visible}
                   visible={visible > -1 ? true : false}
@@ -138,7 +146,7 @@ const ExHibit = props => {
           <View style={styles.infoContainer}>
             <HTML
               contentWidth={width}
-              source={{html: current.description}}
+              source={{ html: current.description }}
               tagsStyles={tagsStyles}
               renderersProps={{
                 a: {
@@ -146,7 +154,7 @@ const ExHibit = props => {
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];
-                      navigation.navigate('Details', {uuid: uuid});
+                      navigation.navigate('Details', { uuid: uuid });
                     } else {
                       Linking.canOpenURL(url).then(supported => {
                         if (supported) {
@@ -169,7 +177,7 @@ export default ExHibit;
 
 const styles = StyleSheet.create({
   title: {
-    paddingBottom:15,
+    paddingBottom: 15,
     fontSize: 24,
     lineHeight: 30,
     color: '#2B2B2B',
@@ -202,9 +210,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageStyle: {
-    width: 316,
+    width: 320,
     height: 170,
     marginRight: 13,
+    marginLeft: 3,
   },
   webview: {
     flex: 1,
@@ -220,7 +229,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     left: 'auto',
-    transform: [{translateX: 300 / 2}],
+    transform: [{ translateX: 300 / 2 }],
     flexDirection: 'row',
     gap: 4,
   },
@@ -228,7 +237,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     alignItems: 'center',
   },
-  slider: {height: 161},
+  slider: { height: 161 },
   arrow: {
     width: 30,
     height: 30,

@@ -205,8 +205,8 @@ const Main = () => {
             controls={false}
             repeat={false}
             progressUpdateInterval={250.0}
-            resizeMode="contain"
-            //disableFullscreen={true}
+            resizeMode="cover"
+            disableFullscreen={true}
             poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
           />
         </View>

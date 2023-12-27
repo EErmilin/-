@@ -7,12 +7,13 @@ import {
   View,
   TouchableOpacity,
   useWindowDimensions,
+  Linking
 } from 'react-native';
-import { images } from '../../../assets/images/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../../assets/colors';
 import HTML from 'react-native-render-html';
 import { useStore } from '../../../App';
+import { useNavigation } from '@react-navigation/native';
 
 interface ExHibitProps {
   image: string;
@@ -21,23 +22,10 @@ interface ExHibitProps {
 }
 
 const Info = () => {
-  const refImage = useRef(null);
-  const [active, setActive] = useState(0);
-  const [layoutX, setLayoutX] = useState(0);
   const {state}: any = useStore();
   const {width} = useWindowDimensions();
   const info = state?.content?.find(item => item.key == "омузее_дляпосетителей");
-  //next slider
-  const nextSlider = () => {
-    if (active === images.imageSlider.length - 1) {
-      return;
-    } else {
-      setActive(prevState => prevState + 1);
-      setLayoutX(prev => prev + 320);
-      refImage?.current?.scrollTo({ x: layoutX, animated: true });
-      console.log(layoutX);
-    }
-  };
+  const navigation = useNavigation();
 
   const tagsStyles = {
     body: {
@@ -46,80 +34,13 @@ const Info = () => {
     },
   };
 
-  const prevSlider = () => {
-    if (active === 0) {
-      setLayoutX(0);
-    } else {
-      setActive(prevState => prevState - 1);
-      setLayoutX(prev => prev - 320);
-      console.log(layoutX);
 
-      refImage?.current?.scrollTo({ x: layoutX, animated: true });
-    }
-  };
-
-  const onLayoutEvent = (event: { nativeEvent: { layout: { x: number } } }) => {
-    const { x } = event.nativeEvent.layout;
-    setLayoutX(x / images.imageSlider.length);
-  };
 
   return (
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.title}>Для посетитилей</Text>
-          { /*       
-          <View style={styles.slider}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              scrollEnabled={false}
-              ref={refImage}>
-              {images.imageSlider.map((image, i) => {
-                return (
-                  <Image
-                    source={image.item}
-                    style={styles.imageStyle}
-                    resizeMode="cover"
-                    key={i}
-                    onLayout={onLayoutEvent}
-                  />
-                );
-              })}
-            </ScrollView>
-            <TouchableOpacity style={styles.arrow} onPress={nextSlider}>
-              <Arrow_right />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.arrow, styles.left]}
-              onPress={prevSlider}>
-              <Left_arrow />
-            </TouchableOpacity>
-            <View style={styles.dotsContainer}>
-              {images.imageSlider.map((_, index) => {
-                return (
-                  <View
-                    key={index}
-                    style={[
-                      styles.dots,
-                      {
-                        backgroundColor:
-                          active === index ? colors.blue : colors.yellow,
-                      },
-                    ]}
-                  />
-                );
-              })}
-            </View>
-            </View>  
-
-          <View style={styles.voiceContainer}>
-            <View style={styles.play}>
-              <Play_btn />
-            </View>
-          </View>*/}
-
-          {/* INFO */}
           <View style={styles.infoContainer}>
             <HTML
               contentWidth={width}
@@ -178,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageStyle: {
-    width: 300,
+    width: 320,
     height: 170,
     marginRight: 20,
   },

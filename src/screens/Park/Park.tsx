@@ -12,12 +12,16 @@ const Park = () => {
         navigation.navigate('Details', { uuid: uuid })
     };
 
-    //   <Image source={{ uri: item.image }} resizeMode="cover" />
     const templateExibits = useMemo(() => {
         console.log(state?.exhibits)
         if (state?.exhibits) {
-            const array = state?.exhibits.filter((item) => item.name === 'Чум' || item.name === 'Лабаз' || item.name === 'Священный лабаз' || item.name === 'Печь глинобитная' || item.name === 'Жилые постройки')
-            return array.map((item) => {
+            let exhibitsArray = []
+                exhibitsArray.push(state?.exhibits.find((item) => item.id === "cb593c21-e470-45ee-8bdb-76b5cdb6be30"))
+                exhibitsArray.push(state?.exhibits.find((item) => item.id === "31a81a0e-b70a-4ccb-b98e-7dfac23303f2"))
+                exhibitsArray.push(state?.exhibits.find((item) => item.id === "ab6a2503-3199-4c38-9abf-4bbe32853d8d"))
+                exhibitsArray.push(state?.exhibits.find((item) => item.id === "cd6d5819-d176-40a4-94a5-08d9b7d77588"))
+                exhibitsArray.push(state?.exhibits.find((item) => item.id === "4dae431e-c8a4-4920-93c7-88f8b05b6b77"))
+            return exhibitsArray.map((item) => {
                 const imgArray = item.images?.map(img =>
                     img.directus_files_id
                         ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
@@ -67,15 +71,16 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 50,
         backgroundColor: colors.white,
-      
+
     },
     name: {
         color: 'black',
         textAlign: 'center',
-        fontSize: 16,
+        fontFamily: 'OzHandicraftCyrillicBT',
+        fontSize: 24,
         fontStyle: 'normal',
-        lineHeight: 20, /* 125% */
-        letterSpacing: 0.8,
+        lineHeight: 30, /* 125% */
+        letterSpacing: 2,
         marginTop: 14,
     },
     img: {
