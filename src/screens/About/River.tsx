@@ -81,7 +81,7 @@ const River = props => {
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.title}>Экспозиция «Мир священной реки Тром-Аган»</Text>
           {/* SLIDER */}
-          <View style={styles.slider}>
+          {imgArray && imgArray.length && <View style={styles.slider}>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -133,7 +133,7 @@ const River = props => {
                 );
               })}
             </View>
-          </View>
+          </View>}
           {/* VOICE */}
           <View style={styles.voiceContainer}>
             <View
@@ -155,6 +155,12 @@ const River = props => {
               renderersProps={{
                 a: {
                   onPress(event, url, htmlAttribs, target) {
+                    if (url.includes('6684d5ea-d564-481e-afa8-b5f85db93ccd')) {
+                      return navigation.navigate('AboutPage');
+                    }
+                    if (url.includes('d964e041-0c8a-42bf-b18e-9ebeff55dd0b')) {
+                      return navigation.navigate('Alexsander');
+                    }
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];

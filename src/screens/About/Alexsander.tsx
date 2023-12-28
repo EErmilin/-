@@ -159,6 +159,12 @@ const Alexsander = () => {
               renderersProps={{
                 a: {
                   onPress(event, url, htmlAttribs, target) {
+                    if (url.includes('6684d5ea-d564-481e-afa8-b5f85db93ccd')) {
+                      return navigation.navigate('AboutPage');
+                    }
+                    if(url.includes('43ae2845-b94a-46cd-aaf0-4d454f1b71e8')){
+                     return navigation.navigate('Exposition');
+                    }
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];

@@ -207,7 +207,7 @@ const Main = () => {
             progressUpdateInterval={250.0}
             resizeMode="cover"
             disableFullscreen={true}
-            poster="https://sun9-43.userapi.com/impg/ROoE0VZCE17aUr80oB2iTGlOKwMDrv44nV9gEg/ZuuAwjZOm7g.jpg?size=778x539&quality=95&sign=d05cf33bedca56b5e42ff36729bba4e6&type=album"
+            poster="https://museum.mobility.tw1.ru/assets/8223cdc4-df91-435f-b68e-448058b90707.jpg"
           />
         </View>
 

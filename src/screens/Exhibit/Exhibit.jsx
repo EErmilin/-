@@ -26,12 +26,12 @@ const ExHibit = props => {
   const { state } = useStore();
   const navigation = useNavigation();
   const current = state?.exhibits?.find(item => item.id == props.route.params.uuid);
-  const imgArray = current?.images?.map(img =>
+  const imgArray = current?.images && !!current?.images.length && current?.images?.map(img =>
     img.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${img.directus_files_id?.filename_disk}`
       : null,
   );
-  const audios = current?.audios?.map(audio =>
+  const audios = current?.audios && !!current?.audios.length && current?.audios?.map(audio =>
     audio.directus_files_id
       ? `https://museum.mobility.tw1.ru/assets/${audio.directus_files_id?.filename_disk}`
       : null,
@@ -63,6 +63,9 @@ const ExHibit = props => {
     body: {
       whiteSpace: 'normal',
       color: 'gray',
+    },
+    div: {
+      fontSize: '14.0pt',
     },
   };
 
@@ -138,10 +141,9 @@ const ExHibit = props => {
             </View>
           ) : null}
           {/* VOICE */}
-
-          <View style={styles.voiceContainer}>
+          {audios && <View style={styles.voiceContainer}>
             <MusicPlayer audio={audios} />
-          </View>
+          </View>}
           {/* INFO */}
           <View style={styles.infoContainer}>
             <HTML
@@ -151,6 +153,15 @@ const ExHibit = props => {
               renderersProps={{
                 a: {
                   onPress(event, url, htmlAttribs, target) {
+                    if (url.includes('6684d5ea-d564-481e-afa8-b5f85db93ccd')) {
+                      return navigation.navigate('AboutPage');
+                    }
+                    if (url.includes('d964e041-0c8a-42bf-b18e-9ebeff55dd0b')) {
+                      return navigation.navigate('Alexsander');
+                    }
+                    if (url.includes('43ae2845-b94a-46cd-aaf0-4d454f1b71e8')) {
+                      return navigation.navigate('Exposition');
+                    }
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];
