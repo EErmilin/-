@@ -55,6 +55,14 @@ const River = props => {
       whiteSpace: 'normal',
       color: 'gray',
     },
+    div: {
+      whiteSpace: 'normal',
+      color: 'gray',
+    },
+    p: {
+      whiteSpace: 'normal',
+      color: 'gray',
+    },
   };
 
 

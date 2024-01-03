@@ -5,16 +5,17 @@ import {
   Dimensions,
   View,
   TouchableOpacity,
+  Linking
 } from 'react-native';
-import React, {useCallback} from 'react';
-import {colors} from '../../../assets/colors';
+import React, { useCallback } from 'react';
+import { colors } from '../../../assets/colors';
 
 import MenuClose_icon from '../../../assets/icons/MenuClose_icon';
 
-import {PAGES} from '../MainAppNavigation';
-import {TMainAppPage} from '../types/TabTypes';
+import { PAGES } from '../MainAppNavigation';
+import { TMainAppPage } from '../types/TabTypes';
 
-const {width} = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
 interface IDrawerMenu {
   onNavigation: (screen: string) => void;
@@ -22,7 +23,7 @@ interface IDrawerMenu {
 }
 
 
-const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
+const DrawerMenu: React.FC<IDrawerMenu> = ({ onNavigation, onClose }) => {
   const drawerComponent = useCallback((item: TMainAppPage) => {
     return (
       <TouchableOpacity
@@ -34,7 +35,11 @@ const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
       </TouchableOpacity>
     );
   }, []);
-  const menuLinks = PAGES.filter((e)=>e.icon )
+  const menuLinks = PAGES.filter((e) => e.icon)
+
+  const openPrivacy = () => {
+    Linking.openURL('https://www.privacypolicies.com/live/1343a40d-191c-474d-a753-e504b7806f1d');
+  };
 
 
   return (
@@ -45,6 +50,7 @@ const DrawerMenu: React.FC<IDrawerMenu> = ({onNavigation, onClose}) => {
       <View style={styles.menu_wrapper}>
         {menuLinks.map(element => drawerComponent(element))}
       </View>
+      <TouchableOpacity onPress={() => openPrivacy()} style={styles.privacy}><Text style={styles.privacyText}>Политика конфиденциальности</Text></TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -63,6 +69,15 @@ const styles = StyleSheet.create({
   },
   menu_wrapper: {
     marginTop: 80,
+  },
+  privacy: {
+    position: 'absolute',
+    bottom: 50,
+    left: 50,
+    fontSize:15
+  },
+  privacyText: {
+    fontSize:17
   },
   menu_iconClose: {
     position: 'absolute',

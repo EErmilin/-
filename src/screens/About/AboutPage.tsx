@@ -180,6 +180,12 @@ const AboutPage = () => {
               renderersProps={{
                 a: {
                   onPress(event, url, htmlAttribs, target) {
+                    if(url.includes('43ae2845-b94a-46cd-aaf0-4d454f1b71e8')){
+                      return navigation.navigate('Exposition');
+                     }
+                    if (url.includes('d964e041-0c8a-42bf-b18e-9ebeff55dd0b')) {
+                      return navigation.navigate('Alexsander');
+                    }
                     if (url.includes('exhibits')) {
                       const parts = url.split('/');
                       var uuid = parts[parts.length - 1];
